@@ -1,0 +1,740 @@
+Søk
+https://api.hra.no//search/address?query=Veienkollen%2024,%203517
+
+Response
+
+[
+  {
+    "propertyGuid": "8ff1ac0e-aa92-465d-bb04-9883dcb20a05",
+    "gnrBnrFnrSnr": "3305.49.270.9.0",
+    "agreementGuid": "c4ce7f3d-bef2-41c1-9e42-becc8282cfe1",
+    "propertyName": "Veienkollen 24",
+    "municipalityNumber": 3305,
+    "municipality": "RINGERIKE",
+    "streetNumber": 35100,
+    "streetName": "Veienkollen",
+    "houseNumber": 24,
+    "houseLetter": null,
+    "postalPlace": "HØNEFOSS",
+    "postalNumber": 3517,
+    "name": "Veienkollen 24, 3517 HØNEFOSS"
+  }
+]
+
+
+HRA Henteklaneder
+Søkhttps://api.hra.no/Renovation/UpcomingGarbageDisposals/c4ce7f3d-bef2-41c1-9e42-becc8282cfe1
+
+
+Response
+
+[
+  {
+    "name": "Restavfall",
+    "date": "2026-12-11",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-11-13",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-01-27",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-02-24",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-04-27",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-05-28",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-03-24",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-07-23",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-08-20",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-09-17",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-10-16",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Restavfall",
+    "date": "2026-06-25",
+    "fractionId": 9999,
+    "fractionGuid": "b4bbf08d-30f0-4024-9f53-e42229ec48a6",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-10-16",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-12-11",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-11-27",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-11-13",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-10-30",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-10-01",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-01-13",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-09-03",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-05-28",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-06-25",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-05-12",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-04-27",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-04-10",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-03-24",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-06-11",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-03-10",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-02-10",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-01-27",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-07-09",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-07-23",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-08-06",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-08-20",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-02-24",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Matavfall",
+    "date": "2026-09-17",
+    "fractionId": 2110,
+    "fractionGuid": "ccdd09f5-3510-43bb-9bb4-2b192230d354",
+    "route": 14408,
+    "routeName": "408 Mat og restavfall",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-09-03",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-03-10",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-08-06",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-07-09",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-06-11",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-05-12",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-04-10",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-10-01",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-10-30",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-01-13",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-11-27",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Papir, papp og kartong",
+    "date": "2026-02-10",
+    "fractionId": 2400,
+    "fractionGuid": "8998844f-406e-458c-b8da-8e8249f5c321",
+    "route": 24408,
+    "routeName": "408 Mat og papir",
+    "frequency": 4,
+    "startDay": 3
+  },
+  {
+    "name": "Glass- og metallemballasje",
+    "date": "2026-10-30",
+    "fractionId": 2612,
+    "fractionGuid": "2627574c-db98-4d6b-94fd-dfb47a64007d",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Glass- og metallemballasje",
+    "date": "2026-09-03",
+    "fractionId": 2612,
+    "fractionGuid": "2627574c-db98-4d6b-94fd-dfb47a64007d",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Glass- og metallemballasje",
+    "date": "2026-07-09",
+    "fractionId": 2612,
+    "fractionGuid": "2627574c-db98-4d6b-94fd-dfb47a64007d",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Glass- og metallemballasje",
+    "date": "2026-05-12",
+    "fractionId": 2612,
+    "fractionGuid": "2627574c-db98-4d6b-94fd-dfb47a64007d",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Glass- og metallemballasje",
+    "date": "2026-01-13",
+    "fractionId": 2612,
+    "fractionGuid": "2627574c-db98-4d6b-94fd-dfb47a64007d",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Glass- og metallemballasje",
+    "date": "2026-03-10",
+    "fractionId": 2612,
+    "fractionGuid": "2627574c-db98-4d6b-94fd-dfb47a64007d",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-10-01",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 44408,
+    "routeName": "408 Plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-10-30",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-09-03",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-08-06",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 44408,
+    "routeName": "408 Plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-07-09",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-06-11",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 44408,
+    "routeName": "408 Plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-05-12",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-04-10",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 44408,
+    "routeName": "408 Plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-03-10",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-02-10",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 44408,
+    "routeName": "408 Plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-11-27",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 44408,
+    "routeName": "408 Plast",
+    "frequency": 8,
+    "startDay": 3
+  },
+  {
+    "name": "Plastemballasje",
+    "date": "2026-01-13",
+    "fractionId": 3200,
+    "fractionGuid": "03fc89dd-accb-4b4f-a6b0-667438975720",
+    "route": 34408,
+    "routeName": "408 Glass, metall og plast",
+    "frequency": 8,
+    "startDay": 3
+  }
+]
+
+
+
+Geonorge
+
+https://ws.geonorge.no/adresser/v1/sok?sok=veienkollen%2024%20h%C3%B8nefoss
+
+
+Response
+{
+  "metadata": {
+    "viserFra": 0,
+    "treffPerSide": 10,
+    "viserTil": 10,
+    "asciiKompatibel": true,
+    "side": 0,
+    "totaltAntallTreff": 1,
+    "sokeStreng": "sok=veienkollen%2024%20h%C3%B8nefoss"
+  },
+  "adresser": [
+    {
+      "adressenavn": "Veienkollen",
+      "adressetekst": "Veienkollen 24",
+      "adressetilleggsnavn": null,
+      "adressekode": 35100,
+      "nummer": 24,
+      "bokstav": "",
+      "kommunenummer": "3305",
+      "kommunenavn": "RINGERIKE",
+      "gardsnummer": 49,
+      "bruksnummer": 270,
+      "festenummer": 9,
+      "undernummer": null,
+      "bruksenhetsnummer": [],
+      "objtype": "Vegadresse",
+      "poststed": "HØNEFOSS",
+      "postnummer": "3517",
+      "adressetekstutenadressetilleggsnavn": "Veienkollen 24",
+      "stedfestingverifisert": false,
+      "representasjonspunkt": {
+        "epsg": "EPSG:4258",
+        "lat": 60.1741636862063,
+        "lon": 10.2336955803711
+      },
+      "oppdateringsdato": "2024-01-01T00:00:00"
+    }
+  ]
+}
