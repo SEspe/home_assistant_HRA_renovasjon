@@ -1,23 +1,26 @@
-# Min Renovasjon
+# HRA Renovasjon
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
-<a href="https://buymeacoffee.com/audunsimonp" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
-Home Assistant integration of the norwegian Min Renovasjon app.
+Home Assistant integration of the norwegian HRA Renovasjon app (HRA App). Special for Ringerike, Lunner,Hole og Jevnaker 
 
+Based and Credit to : https://github.com/eyesoft/home_assistant_min_renovasjon/.  Only changed the api / decode part to suit HRA API
 ## Installation
-Under HACS -> Integrations, add custom repository "https://github.com/eyesoft/home_assistant_min_renovasjon/" with Category "Integration". 
+Under HACS -> Integrations, add custom repository "https://github.com/SEspe/home_assistant_HRA_renovasjon/ with Category "Integration". 
 
-Search for repository "Min Renovasjon" and download it. Restart Home Assistant.
+Search for repository "HRA_Renovasjon" and download it. Restart Home Assistant.
 
-Go to Settings > Integrations and Add Integration "Min Renovasjon". Type in address to search, e.g. "Min gate 12, 0153" (street address comma zipcode).
+Go to Settings > Integrations and Add Integration "HRA Renovasjon". Type in address to search, e.g. "Min gate 12, 0153" (street address comma zipcode).
 
 Click Configure and choose fractions to create sensors.
 
 Restart Home Assistant.
 
-## Upgrade from version pre 2.0.0
-Install component and configure it as described under Installation. 
+## Debugging
+in configuration.yaml
 
-If everything work as before after the restart, the old integration "min_renovasjon" and sensor "min_renovasjon" can be deleted from configuration.yaml
+logger:
+  default: info
+  logs:
+    custom_components.hra_renovation: debug
