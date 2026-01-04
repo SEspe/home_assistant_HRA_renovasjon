@@ -20,7 +20,9 @@ Restart Home Assistant.
 ## Debugging
 in configuration.yaml
 
+```yaml
 logger:
   default: info
   logs:
     custom_components.hra_renovation: debug
+```
