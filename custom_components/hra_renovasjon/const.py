@@ -1,4 +1,4 @@
-DOMAIN = "hra_renovation"
+DOMAIN = "hra_renovasjon"
 
 CONF_ADDRESS = "address"
 CONF_AGREEMENT_GUID = "agreement_guid"

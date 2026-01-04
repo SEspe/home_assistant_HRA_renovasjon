@@ -17,7 +17,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class HraConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Config flow for HRA Renovation."""
+    """Config flow for HRA Renovasjon."""
 
     VERSION = 1
 

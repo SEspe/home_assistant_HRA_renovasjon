@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up HRA Renovation from a config entry."""
+    """Set up HRA Renovasjon from a config entry."""
     session = async_get_clientsession(hass)
     client = HraApiClient(session)
 
@@ -35,7 +35,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     coordinator = DataUpdateCoordinator(
         hass,
         _LOGGER,
-        name="HRA Renovation",
+        name="HRA Renovasjon",
         update_method=async_update_data,
         update_interval=timedelta(minutes=DEFAULT_SCAN_INTERVAL_MINUTES),
     )
