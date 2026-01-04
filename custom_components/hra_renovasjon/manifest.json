@@ -2,12 +2,12 @@
   "domain": "hra_renovasjon",
   "name": "HRA Renovasjon",
   "version": "0.1.0",
-  "documentation": "https://api.hra.no/",
-  "issue_tracker": "https://github.com/yourusername/hra_renovation",
+  "documentation": "https://github.com/SEspe/home_assistant_HRA_renovasjon",
+  "issue_tracker": "https://github.com/SEspe/home_assistant_HRA_renovasjon",
   "requirements": [],
   "dependencies": [],
   "codeowners": [
-    "@yourusername"
+    "@SEspe"
   ],
   "config_flow": true,
   "iot_class": "cloud_polling",
