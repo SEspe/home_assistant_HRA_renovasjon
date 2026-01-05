@@ -10,18 +10,18 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
-    min_renovasjon = hass.data[DOMAIN]["data"]
-    async_add_entities([MinRenovasjonCalendarEntity("Min Renovasjon Calendar", config_entry, min_renovasjon)])
+    _hra_renovasjon_renovasjon = hass.data[DOMAIN]["data"]
+    async_add_entities([MinRenovasjonCalendarEntity("HRA Renovasjon Calendar", config_entry, hra_renovasjon)])
 
 
 class MinRenovasjonCalendarEntity(CalendarEntity):
     """Representation of a MinRenovasjon Calendar Entity."""
 
-    def __init__(self, calendar_name, config_entry, min_renovasjon):
+    def __init__(self, calendar_name, config_entry, hra_renovasjon):
         """Initialize the calendar entity."""
         self._calendar_name = calendar_name
         self._config_entry = config_entry
-        self._min_renovasjon = min_renovasjon
+        self._hra_renovasjon = hra_renovasjon
         self._events = []
 
     @property
@@ -59,7 +59,7 @@ class MinRenovasjonCalendarEntity(CalendarEntity):
     async def _fetch_events(self):
         """Call Min Renovasjon to fetch delivery dates."""
         events = []
-        calendar_list = await self._min_renovasjon.async_get_calendar_list()
+        calendar_list = await self._hra_renovasjon.async_get_calendar_list()
 
         for entry in calendar_list:
             if entry:

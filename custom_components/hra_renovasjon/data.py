@@ -45,52 +45,48 @@ class DataClient:
         return calendar_list
 
     # Parses Tømmekalender and Fraksjoner and returns a combined calendar list
-    @staticmethod
-    def _parse_calendar_list(tommekalender, fraksjoner):
-        calendar_list = []
+@staticmethod
+def _parse_calendar_list(tommekalender, fraksjoner):
+    calendar_list = []
 
-        if tommekalender is None or fraksjoner is None:
-            _LOGGER.error("Could not fetch calendar. Check configuration parameters.")
-            return None
+    if tommekalender is None or fraksjoner is None:
+        _LOGGER.error("Could not fetch calendar. Check configuration parameters.")
+        return None
 
-        for calender_entry in tommekalender:
-            fraksjon_id = calender_entry['FraksjonId']
-            tommedato_forste = None
-            tommedato_neste = None
-            tommedato_alle = None
+    for calender_entry in tommekalender:
+        fraksjon_id = calender_entry['FraksjonId']
 
-            if len(calender_entry['Tommedatoer']) == 1:
-                tommedato_forste = calender_entry['Tommedatoer'][0]
-            else:
-                tommedato_forste = calender_entry['Tommedatoer'][0]
-                tommedato_neste = calender_entry['Tommedatoer'][1]
+        # Parse ALL dates into pure date objects (YYYY-MM-DD)
+        tommedato_alle = [
+            datetime.strptime(d, "%Y-%m-%dT%H:%M:%S").date()
+            for d in calender_entry['Tommedatoer']
+        ]
 
-            tommedato_alle = calender_entry['Tommedatoer']
+        # First and next pickup
+        tommedato_forste = tommedato_alle[0] if len(tommedato_alle) > 0 else None
+        tommedato_neste = tommedato_alle[1] if len(tommedato_alle) > 1 else None
 
-            if tommedato_forste is not None:
-                tommedato_forste = datetime.strptime(tommedato_forste, "%Y-%m-%dT%H:%M:%S")
-            if tommedato_neste is not None:
-                tommedato_neste = datetime.strptime(tommedato_neste, "%Y-%m-%dT%H:%M:%S")
+        # Match fraction metadata
+        for fraksjon in fraksjoner:
+            if int(fraksjon['Id']) == int(fraksjon_id):
+                fraksjon_navn = fraksjon['Navn']
 
-            for fraksjon in fraksjoner:
-                if int(fraksjon['Id']) == int(fraksjon_id):
-                    fraksjon_navn = fraksjon['Navn']
+                fraksjon_ikon = fraksjon['NorkartStandardFraksjonIkon']
+                if fraksjon_ikon is None:
+                    fraksjon_ikon = fraksjon['Ikon']
+                    fraksjon_ikon = fraksjon_ikon.replace("http:", "https:")
 
-                    fraksjon_ikon = fraksjon['NorkartStandardFraksjonIkon']
-                    if fraksjon_ikon is None:
-                        fraksjon_ikon = fraksjon['Ikon']
-                        fraksjon_ikon = fraksjon_ikon.replace("http:", "https:")
+                calendar_list.append((
+                    fraksjon_id,
+                    fraksjon_navn,
+                    fraksjon_ikon,
+                    tommedato_forste,
+                    tommedato_neste,
+                    tommedato_alle
+                ))
+                break
 
-                    calendar_list.append((fraksjon_id,
-                                            fraksjon_navn,
-                                            fraksjon_ikon,
-                                            tommedato_forste,
-                                            tommedato_neste,
-                                            tommedato_alle))
-                    continue
-
-        return calendar_list
-
+    return calendar_list
     # Checks if calendar data needs to be updated
     @staticmethod
     def _check_for_refresh_of_data(calendar_list):

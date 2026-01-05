@@ -17,6 +17,53 @@ Click Configure and choose fractions to create sensors.
 
 Restart Home Assistant.
 
+Sensors
+
+plastemballasje
+papir_papp_og_kartong
+matavfall
+restavfall
+glass_og_metallemballasje
+
+Sennsors has state and attributes
+['next_date', 'next_dates', 'route_name', 'frequency', 'fraction_id', 'fraction_guid', 'days_to_pickup', 'icon', 'friendly_name']
+
+Card
+![Exempel card](docs/card1.png)
+
+
+<details>
+    <summary>Show yaml</summary>
+
+```yaml
+type: custom:mushroom-chips-card
+chips:
+  - type: template
+    icon: mdi:recycle
+    icon_color: green
+    content: "Plast: {{ states('sensor.plastemballasje') }}"
+  - type: template
+    icon: mdi:trash-can
+    icon_color: blue
+    content: "Papir: {{ states('sensor.papir_papp_og_kartong') }}"
+  - type: template
+    icon: mdi:food-apple
+    icon_color: brown
+    content: "Mat: {{ states('sensor.matavfall') }}"
+  - type: template
+    icon: mdi:trash-can-outline
+    icon_color: gray
+    content: "Rest: {{ states('sensor.restavfall') }}"
+  - type: template
+    icon: mdi:glass-fragile
+    icon_color: teal
+    content: "Glass/Metall: {{ states('sensor.glass_og_metallemballasje') }}"
+alignment: center
+
+```
+
+</details>
+
 ## Debugging
 in configuration.yaml
 
