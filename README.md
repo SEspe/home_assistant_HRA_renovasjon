@@ -29,7 +29,7 @@ Sennsors has state and attributes
 ['next_date', 'next_dates', 'route_name', 'frequency', 'fraction_id', 'fraction_guid', 'days_to_pickup', 'icon', 'friendly_name']
 
 Card
-![Exempel card](docs/card1.png)
+![Card1](docs/card1.png)
 
 
 <details>
@@ -59,6 +59,55 @@ chips:
     icon_color: teal
     content: "Glass/Metall: {{ states('sensor.glass_og_metallemballasje') }}"
 alignment: center
+
+```
+
+</details>
+
+Card
+![Card2](docs/card2.png)
+
+
+<details>
+    <summary>Show yaml</summary>
+
+```yaml
+type: vertical-stack
+cards:
+  - type: custom:mushroom-template-card
+    primary: |
+      Neste tømming: {{ states('sensor.renovasjon_neste_dato') }}
+    secondary: |
+      {{ states('sensor.renovasjon_neste_fraksjoner') }}
+    icon: mdi:trash-can
+    tap_action:
+      action: none
+    color: >
+      {% set f = states('sensor.renovasjon_neste_fraksjoner') %} {% if 'Mat' in
+      f %} green {% elif 'Plast' in f %} yellow {% elif 'Papir' in f %} blue {%
+      elif 'Rest' in f %} red {% elif 'Glass' in f %} teal {% else %} grey {%
+      endif %}
+    vertical: true
+    features_position: bottom
+    card_mod:
+      style: |
+        ha-card {
+          padding: 20px;
+          border-radius: 16px;
+          font-size: 18px;
+        }
+  - type: custom:mushroom-chips-card
+    chips:
+      - type: template
+        icon: mdi:calendar
+        content: |
+          {{ states('sensor.renovasjon_dager_til_neste') }} dager
+      - type: template
+        icon: mdi:recycle
+        content: |
+          {{ states('sensor.renovasjon_neste_fraksjoner') }}
+    alignment: center
+
 
 ```
 
