@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import logging
+import os
+import shutil
 from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
@@ -21,6 +23,36 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up HRA Renovasjon from a config entry."""
+
+    # ----------------------------------------------------------------------
+    # Copy icons from custom_components/hra_renovasjon/icons → /www/hra_renovasjon
+    # without blocking the event loop
+    # ----------------------------------------------------------------------
+    component_dir = os.path.dirname(__file__)
+    src = os.path.join(component_dir, "icons")
+    dst = hass.config.path("www/hra_renovasjon")
+
+    def _copy_icons():
+        try:
+            if not os.path.exists(dst):
+                os.makedirs(dst)
+
+            for filename in os.listdir(src):
+                src_file = os.path.join(src, filename)
+                dst_file = os.path.join(dst, filename)
+                shutil.copy(src_file, dst_file)
+
+            _LOGGER.info("HRA Renovasjon: icons copied to /www/hra_renovasjon")
+
+        except Exception as e:
+            _LOGGER.error("HRA Renovasjon: failed to copy icons: %s", e)
+
+    # Run the blocking copy in a thread
+    await hass.async_add_executor_job(_copy_icons)
+
+    # ----------------------------------------------------------------------
+    # Existing integration logic
+    # ----------------------------------------------------------------------
     session = async_get_clientsession(hass)
     client = HraApiClient(session)
 
