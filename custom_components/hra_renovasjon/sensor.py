@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 import logging
@@ -30,11 +29,9 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up HRA sensors based on a config entry."""
     data = hass.data[DOMAIN][entry.entry_id]
     coordinator = data["coordinator"]
 
-    # Group schedule entries by 'name' (Restavfall, Matavfall, etc.)
     fraction_names = set(item["name"] for item in coordinator.data)
 
     entities = []
@@ -45,8 +42,6 @@ async def async_setup_entry(
 
 
 class HraFractionSensor(CoordinatorEntity, SensorEntity):
-    """Sensor for one waste fraction (e.g. Restavfall)."""
-
     _attr_has_entity_name = True
 
     def __init__(self, coordinator, entry_id: str, fraction_name: str) -> None:
@@ -56,28 +51,23 @@ class HraFractionSensor(CoordinatorEntity, SensorEntity):
         self._attr_unique_id = f"{entry_id}_{fraction_name.lower().replace(' ', '_')}"
         self._attr_name = fraction_name
 
-
     @property
     def native_value(self):
-        """Return the next pickup date as the state (ISO date string)."""
         entries = self._filtered_entries()
         if not entries:
             return None
         next_entry = entries[0]
-        return next_entry["date"]  # keep as string (e.g., "2026-01-15")
+        return next_entry["date"]
 
     @property
     def extra_state_attributes(self):
-        """Return additional attributes."""
         entries = self._filtered_entries()
         if not entries:
             return {}
 
-        # Already sorted by parsed_date ascending
         first = entries[0]
         dates = [e["date"] for e in entries][:5]
 
-        # Compute DaysNext (days between today and Next_Date)
         today: date = dt_util.now().date()
         next_date: date | None = first.get("parsed_date")
 
@@ -91,8 +81,7 @@ class HraFractionSensor(CoordinatorEntity, SensorEntity):
         if daysnext is not None and daysnext < 0:
             daysnext = 0
 
-
-        attrs = {
+        return {
             ATTR_NEXT_DATE: first["date"],
             ATTR_NEXT_DATES: dates,
             ATTR_ROUTE_NAME: first.get("routeName"),
@@ -101,19 +90,39 @@ class HraFractionSensor(CoordinatorEntity, SensorEntity):
             ATTR_FRACTION_GUID: first.get("fractionGuid"),
             ATTR_DAYSNEXT: daysnext,
         }
-        return attrs
+
+    # ----------------------------------------------------------------------
+    # Custom entity pictures (served from /local/hra_renovasjon/)
+    # ----------------------------------------------------------------------
+    @property
+    def entity_picture(self):
+        name = self._fraction_name.lower()
+
+        if "glass" in name and "metall" in name:
+            return "/local/hra_renovasjon/GlassOgMetall.png"
+        if "glass" in name:
+            return "/local/hra_renovasjon/glass-new.png"
+        if "metall" in name or "metal" in name:
+            return "/local/hra_renovasjon/metal-new.png"
+        if "rest" in name:
+            return "/local/hra_renovasjon/waste-new.png"
+        if "mat" in name:
+            return "/local/hra_renovasjon/organic-new.png"
+        if "papir" in name or "kartong" in name:
+            return "/local/hra_renovasjon/PapirOgKartong.png"
+        if "plast" in name:
+            return "/local/hra_renovasjon/plastic-new.png"
+
+        return None
 
     @property
     def icon(self):
-        """Return an icon based on fraction name (fallback if no picture is used)."""
         return self._pick_icon(self._fraction_name)
 
     def _filtered_entries(self):
-        """Return all schedule entries for this fraction, in the future, sorted by date."""
         data = self.coordinator.data or []
         today = dt_util.now().date()
 
-        # Only entries for this fraction
         entries = [item for item in data if item["name"] == self._fraction_name]
 
         def parse_date(dstr: str) -> date | None:
@@ -131,14 +140,10 @@ class HraFractionSensor(CoordinatorEntity, SensorEntity):
                 e_copy["parsed_date"] = d
                 future_entries.append(e_copy)
 
-        # Sort by the parsed date
         future_entries.sort(key=lambda x: x["parsed_date"])
         return future_entries
 
-    # --- helpers -------------------------------------------------------------
-
     def _pick_icon(self, fraction_name: str) -> str:
-        """Pick an MDI icon for the fraction (used as fallback when no picture)."""
         name = fraction_name.lower()
         if "rest" in name:
             return "mdi:trash-can"
