@@ -30,7 +30,9 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     data = hass.data[DOMAIN][entry.entry_id]
+
     coordinator = data["coordinator"]
+    _LOGGER.warning("HRA coordinator.data: %s", coordinator.data)
 
     fraction_names = set(item["name"] for item in coordinator.data)
 
@@ -38,7 +40,109 @@ async def async_setup_entry(
     for fraction_name in sorted(fraction_names):
         entities.append(HraFractionSensor(coordinator, entry.entry_id, fraction_name))
 
+    # Legg til den nye sensoren her
+    entities.append(RenovasjonDagerTilNesteSensor(coordinator))
+    entities.append(RenovasjonNesteDatoSensor(coordinator))
+
     async_add_entities(entities)
+
+
+class RenovasjonNesteDatoSensor(SensorEntity):
+    """Samlet sensor: neste dato + dager + fraksjoner."""
+
+    def __init__(self, coordinator):
+        self.coordinator = coordinator
+        self._attr_name = "HRA Renovasjon next date"
+        self._attr_unique_id = "hra_renovasjon_next_date"
+
+    @property
+    def native_value(self):
+        """Returner neste dato på tvers av alle fraksjoner."""
+        data = self.coordinator.data
+        if not isinstance(data, list) or not data:
+            return None
+
+        today = dt_util.now().date()
+        dates = []
+
+        for entry in data:
+            dstr = entry.get("date")
+            if not dstr:
+                continue
+            try:
+                d = datetime.strptime(dstr, "%Y-%m-%d").date()
+            except Exception:
+                continue
+            if d >= today:
+                dates.append(d)
+
+        if not dates:
+            return None
+
+        return min(dates).isoformat()
+
+    @property
+    def extra_state_attributes(self):
+        """Returner dager til neste + fraksjoner."""
+        data = self.coordinator.data
+        if not isinstance(data, list) or not data:
+            return {}
+
+        today = dt_util.now().date()
+        next_date_str = self.native_value
+
+        if not next_date_str:
+            return {}
+
+        next_date = datetime.strptime(next_date_str, "%Y-%m-%d").date()
+        dager = (next_date - today).days
+
+        # Finn fraksjoner som har denne datoen
+        fraksjoner = []
+        for entry in data:
+            if entry.get("date") == next_date_str:
+                fraksjoner.append(entry.get("name"))
+
+        return {
+            "dager_til_neste": dager,
+            "fraksjoner": ", ".join(sorted(set(fraksjoner))),
+        }
+
+
+class RenovasjonDagerTilNesteSensor(SensorEntity):
+    def __init__(self, coordinator):
+        self.coordinator = coordinator
+        self._attr_name = "HRA Renovasjon days to go"
+        self._attr_unique_id = "hra_renovasjon_days_to_go"
+
+    @property
+    def native_value(self):
+        data = self.coordinator.data
+        if not isinstance(data, list) or not data:
+            return None
+
+        today = dt_util.now().date()
+        next_date = None
+
+        for entry in data:
+            dstr = entry.get("date")
+            if not dstr:
+                continue
+
+            try:
+                d = datetime.strptime(dstr, "%Y-%m-%d").date()
+            except Exception:
+                continue
+
+            if d >= today:
+                if next_date is None or d < next_date:
+                    next_date = d
+
+        if next_date is None:
+            return None
+
+        return (next_date - today).days
+
 
 
 class HraFractionSensor(CoordinatorEntity, SensorEntity):
