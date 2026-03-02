@@ -3,8 +3,8 @@ DOMAIN = "hra_renovasjon"
 CONF_ADDRESS = "address"
 CONF_AGREEMENT_GUID = "agreement_guid"
 
-PLATFORM_SENSOR = "sensor"
-PLATFORMS = [PLATFORM_SENSOR]
+PLATFORMS = ["sensor", "calendar"]
+
 
 DEFAULT_SCAN_INTERVAL_MINUTES = 60
 
