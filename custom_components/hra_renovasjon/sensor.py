@@ -32,7 +32,7 @@ async def async_setup_entry(
     data = hass.data[DOMAIN][entry.entry_id]
 
     coordinator = data["coordinator"]
-    _LOGGER.warning("HRA coordinator.data: %s", coordinator.data)
+    _LOGGER.debug("HRA coordinator.data: %s", coordinator.data)
 
     fraction_names = set(item["name"] for item in coordinator.data)
 
@@ -104,8 +104,8 @@ class RenovasjonNesteDatoSensor(SensorEntity):
                 fraksjoner.append(entry.get("name"))
 
         return {
-            "dager_til_neste": dager,
-            "fraksjoner": ", ".join(sorted(set(fraksjoner))),
+            "days_to_pickup": dager,
+            "fractions": ", ".join(sorted(set(fraksjoner))),
         }
 
 

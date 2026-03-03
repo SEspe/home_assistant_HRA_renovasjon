@@ -70,7 +70,7 @@ entity: sensor.hra_renovasjon_next_date
 primary: >
   {% set d = states('sensor.hra_renovasjon_next_date') %} Neste tømming: {% if d
   not in ['unknown', 'unavailable', ''] %}
-    {{ as_datetime(d).strftime('%A %d %B') | title }}
+    {{ (as_datetime(d) | as_local).strftime('%A %d %B') | title }}
   {% else %}
     Ukjent
   {% endif %}
@@ -89,8 +89,15 @@ grid_options:
   rows: auto
 color: >
   {% set d = state_attr('sensor.hra_renovasjon_next_date', 'days_to_pickup') |
-  int(99) %} {% if d <= 1 %} red {% elif d <= 3 %} orange {% elif d <= 7 %}
-  yellow {% else %} green {% endif %}
+  int(99) %} {% if d <= 1 %}
+    red
+  {% elif d <= 3 %}
+    orange
+  {% elif d <= 7 %}
+    yellow
+  {% else %}
+    green
+  {% endif %}
 ```
 
 ```yaml NO
@@ -99,7 +106,8 @@ entity: sensor.hra_renovasjon_next_date
 primary: >
   {% set d = states('sensor.hra_renovasjon_next_date') %} Neste tømming: {% if d
   not in ['unknown', 'unavailable', ''] %}
-    {% set dt = as_datetime(d) %}
+
+    {% set dt = as_datetime(d) | as_local %}
 
     {% set ukedag = {
       'Monday':'Mandag','Tuesday':'Tirsdag','Wednesday':'Onsdag',
@@ -113,6 +121,7 @@ primary: >
     }[dt.strftime('%B')] %}
 
     {{ ukedag }} {{ dt.strftime('%d') }} {{ måned }}
+
   {% else %}
     Ukjent
   {% endif %}
@@ -120,9 +129,7 @@ secondary: >
   Dager til neste tømming: {{ state_attr('sensor.hra_renovasjon_next_date',
   'days_to_pickup') }}
 
-  Fraksjoner:
-
-  {{ state_attr('sensor.hra_renovasjon_next_date', 'fractions') }}
+  Fraksjoner: {{ state_attr('sensor.hra_renovasjon_next_date', 'fractions') }}
 icon: mdi:trash-can
 multiline_secondary: true
 tap_action:
@@ -133,8 +140,16 @@ grid_options:
   rows: auto
 color: >
   {% set d = state_attr('sensor.hra_renovasjon_next_date', 'days_to_pickup') |
-  int(99) %} {% if d <= 1 %} red {% elif d <= 3 %} orange {% elif d <= 7 %}
-  yellow {% else %} green {% endif %}
+  int(99) %} {% if d <= 1 %}
+    red
+  {% elif d <= 3 %}
+    orange
+  {% elif d <= 7 %}
+    yellow
+  {% else %}
+    green
+  {% endif %}
+
 
 ```
 </details>

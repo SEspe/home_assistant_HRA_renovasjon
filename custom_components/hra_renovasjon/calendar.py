@@ -7,21 +7,23 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
+    """Set up calendar entity from config entry."""
     entry_data = hass.data[DOMAIN][config_entry.entry_id]
     coordinator = entry_data["coordinator"]
     client = entry_data["client"]
 
     async_add_entities([
         HraRenovasjonCalendar(
-            "HRA Renovasjon Calendar",
-            config_entry,
-            coordinator,
-            client
+            name="HRA Renovasjon Kalender",
+            config_entry=config_entry,
+            coordinator=coordinator,
+            client=client,
         )
     ])
 
 
 class HraRenovasjonCalendar(CalendarEntity):
+    """Calendar entity for HRA Renovasjon."""
 
     def __init__(self, name, config_entry, coordinator, client):
         self._name = name
@@ -47,12 +49,12 @@ class HraRenovasjonCalendar(CalendarEntity):
 
     @property
     def device_info(self):
+        """Register device so HA can show logo.png."""
         return {
             "identifiers": {(DOMAIN, self._config_entry.entry_id)},
             "name": "HRA Renovasjon",
-            "manufacturer": "MinRenovasjon",
+            "manufacturer": "HRA",
             "model": "Renovasjonskalender",
-            "entry_type": "service",
         }
 
     @property
@@ -62,16 +64,9 @@ class HraRenovasjonCalendar(CalendarEntity):
         return self._events[0]
 
     async def async_get_events(self, hass, start_date, end_date):
-        # start_date / end_date kan være datetime eller date
-        if isinstance(start_date, datetime):
-            start = start_date.date()
-        else:
-            start = start_date
-
-        if isinstance(end_date, datetime):
-            end = end_date.date()
-        else:
-            end = end_date
+        """Return events between two dates."""
+        start = start_date.date() if isinstance(start_date, datetime) else start_date
+        end = end_date.date() if isinstance(end_date, datetime) else end_date
 
         return [
             event for event in self._events
@@ -81,7 +76,7 @@ class HraRenovasjonCalendar(CalendarEntity):
     async def async_update(self):
         """Fetch events from coordinator data."""
         data = self._coordinator.data
-        _LOGGER.warning("Coordinator data: %s", data)
+        _LOGGER.debug("Coordinator data: %s", data)
 
         events: list[CalendarEvent] = []
 
@@ -89,7 +84,6 @@ class HraRenovasjonCalendar(CalendarEntity):
             fraction_name = entry["name"]
             pickup_date = entry["date"]
 
-            # All-day event (no time)
             d = datetime.strptime(pickup_date, "%Y-%m-%d").date()
 
             events.append(CalendarEvent(
