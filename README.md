@@ -19,98 +19,124 @@ Restart Home Assistant.
 
 Sensors
 
+Basic sensors are named:
+
 plastemballasje
 papir_papp_og_kartong
 matavfall
 restavfall
 glass_og_metallemballasje
 
-Sennsors has state and attributes
+Sensors has state and attributes
 ['next_date', 'next_dates', 'route_name', 'frequency', 'fraction_id', 'fraction_guid', 'days_to_pickup', 'icon', 'friendly_name']
 
+Computed sensors:
+hra_renovasjon_next_date  with attributea days_to_pickup and fractions
+
+
+
 Card
-![Card1](docs/card1.png)
-
-
+![Ex1](docs/ex1.png)
 <details>
     <summary>Show yaml</summary>
 
 ```yaml
-type: custom:mushroom-chips-card
-chips:
-  - type: template
-    icon: mdi:recycle
-    icon_color: green
-    content: "Plast: {{ states('sensor.plastemballasje') }}"
-  - type: template
-    icon: mdi:trash-can
-    icon_color: blue
-    content: "Papir: {{ states('sensor.papir_papp_og_kartong') }}"
-  - type: template
-    icon: mdi:food-apple
-    icon_color: brown
-    content: "Mat: {{ states('sensor.matavfall') }}"
-  - type: template
-    icon: mdi:trash-can-outline
-    icon_color: gray
-    content: "Rest: {{ states('sensor.restavfall') }}"
-  - type: template
-    icon: mdi:glass-fragile
-    icon_color: teal
-    content: "Glass/Metall: {{ states('sensor.glass_og_metallemballasje') }}"
-alignment: center
-
+type: entities
+title: HRA Renovasjon, neste hentedato
+entities:
+  - entity: sensor.restavfall
+    name: Restavfall
+  - entity: sensor.matavfall
+    name: Matavfall
+  - entity: sensor.papir_papp_og_kartong
+    name: Papir,papp kartong
+  - entity: sensor.plastemballasje
+    name: Plast
+  - entity: sensor.glass_og_metallemballasje
+    name: Glass og metall
 ```
-
 </details>
 
 Card
-![Card2](docs/card2.png)
+![CEx2](docs/ex2.png)
 
 
 <details>
     <summary>Show yaml</summary>
 
-```yaml
-type: vertical-stack
-cards:
-  - type: custom:mushroom-template-card
-    primary: |
-      Neste tømming: {{ states('sensor.renovasjon_neste_dato') }}
-    secondary: |
-      {{ states('sensor.renovasjon_neste_fraksjoner') }}
-    icon: mdi:trash-can
-    tap_action:
-      action: none
-    color: >
-      {% set f = states('sensor.renovasjon_neste_fraksjoner') %} {% if 'Mat' in
-      f %} green {% elif 'Plast' in f %} yellow {% elif 'Papir' in f %} blue {%
-      elif 'Rest' in f %} red {% elif 'Glass' in f %} teal {% else %} grey {%
-      endif %}
-    vertical: true
-    features_position: bottom
-    card_mod:
-      style: |
-        ha-card {
-          padding: 20px;
-          border-radius: 16px;
-          font-size: 18px;
-        }
-  - type: custom:mushroom-chips-card
-    chips:
-      - type: template
-        icon: mdi:calendar
-        content: |
-          {{ states('sensor.renovasjon_dager_til_neste') }} dager
-      - type: template
-        icon: mdi:recycle
-        content: |
-          {{ states('sensor.renovasjon_neste_fraksjoner') }}
-    alignment: center
+```yaml EN
+type: custom:mushroom-template-card
+entity: sensor.hra_renovasjon_next_date
+primary: >
+  {% set d = states('sensor.hra_renovasjon_next_date') %} Neste tømming: {% if d
+  not in ['unknown', 'unavailable', ''] %}
+    {{ as_datetime(d).strftime('%A %d %B') | title }}
+  {% else %}
+    Ukjent
+  {% endif %}
+secondary: >
+  Dager til neste tømming: {{ state_attr('sensor.hra_renovasjon_next_date',
+  'dager_til_neste') }}
 
-
+  Fraksjoner: {{ state_attr('sensor.hra_renovasjon_next_date', 'fraksjoner') }}
+icon: mdi:trash-can
+multiline_secondary: true
+tap_action:
+  action: more-info
+features_position: bottom
+grid_options:
+  columns: 12
+  rows: auto
+color: >
+  {% set d = state_attr('sensor.hra_renovasjon_next_date', 'dager_til_neste') |
+  int(99) %} {% if d <= 1 %} red {% elif d <= 3 %} orange {% elif d <= 7 %}
+  yellow {% else %} green {% endif %}
 ```
 
+```yaml NO
+type: custom:mushroom-template-card
+entity: sensor.hra_renovasjon_next_date
+primary: >
+  {% set d = states('sensor.hra_renovasjon_next_date') %} Neste tømming: {% if d
+  not in ['unknown', 'unavailable', ''] %}
+    {% set dt = as_datetime(d) %}
+
+    {% set ukedag = {
+      'Monday':'Mandag','Tuesday':'Tirsdag','Wednesday':'Onsdag',
+      'Thursday':'Torsdag','Friday':'Fredag','Saturday':'Lørdag','Sunday':'Søndag'
+    }[dt.strftime('%A')] %}
+
+    {% set måned = {
+      'January':'januar','February':'februar','March':'mars','April':'april',
+      'May':'mai','June':'juni','July':'juli','August':'august',
+      'September':'september','October':'oktober','November':'november','December':'desember'
+    }[dt.strftime('%B')] %}
+
+    {{ ukedag }} {{ dt.strftime('%d') }} {{ måned }}
+  {% else %}
+    Ukjent
+  {% endif %}
+secondary: >
+  Dager til neste tømming: {{ state_attr('sensor.hra_renovasjon_next_date',
+  'dager_til_neste') }}
+
+  Fraksjoner:
+
+  {{ state_attr('sensor.hra_renovasjon_next_date', 'fraksjoner') }}
+icon: mdi:trash-can
+multiline_secondary: true
+tap_action:
+  action: more-info
+features_position: bottom
+grid_options:
+  columns: 12
+  rows: auto
+color: >
+  {% set d = state_attr('sensor.hra_renovasjon_next_date', 'dager_til_neste') |
+  int(99) %} {% if d <= 1 %} red {% elif d <= 3 %} orange {% elif d <= 7 %}
+  yellow {% else %} green {% endif %}
+
+```
 </details>
 
 ## Debugging
