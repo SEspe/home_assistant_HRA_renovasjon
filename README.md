@@ -76,9 +76,9 @@ primary: >
   {% endif %}
 secondary: >
   Dager til neste tømming: {{ state_attr('sensor.hra_renovasjon_next_date',
-  'dager_til_neste') }}
+  'days_to_pickup') }}
 
-  Fraksjoner: {{ state_attr('sensor.hra_renovasjon_next_date', 'fraksjoner') }}
+  Fraksjoner: {{ state_attr('sensor.hra_renovasjon_next_date', 'fractions') }}
 icon: mdi:trash-can
 multiline_secondary: true
 tap_action:
@@ -88,7 +88,7 @@ grid_options:
   columns: 12
   rows: auto
 color: >
-  {% set d = state_attr('sensor.hra_renovasjon_next_date', 'dager_til_neste') |
+  {% set d = state_attr('sensor.hra_renovasjon_next_date', 'days_to_pickup') |
   int(99) %} {% if d <= 1 %} red {% elif d <= 3 %} orange {% elif d <= 7 %}
   yellow {% else %} green {% endif %}
 ```
@@ -118,11 +118,11 @@ primary: >
   {% endif %}
 secondary: >
   Dager til neste tømming: {{ state_attr('sensor.hra_renovasjon_next_date',
-  'dager_til_neste') }}
+  'days_to_pickup') }}
 
   Fraksjoner:
 
-  {{ state_attr('sensor.hra_renovasjon_next_date', 'fraksjoner') }}
+  {{ state_attr('sensor.hra_renovasjon_next_date', 'fractions') }}
 icon: mdi:trash-can
 multiline_secondary: true
 tap_action:
@@ -132,7 +132,7 @@ grid_options:
   columns: 12
   rows: auto
 color: >
-  {% set d = state_attr('sensor.hra_renovasjon_next_date', 'dager_til_neste') |
+  {% set d = state_attr('sensor.hra_renovasjon_next_date', 'days_to_pickup') |
   int(99) %} {% if d <= 1 %} red {% elif d <= 3 %} orange {% elif d <= 7 %}
   yellow {% else %} green {% endif %}
 
