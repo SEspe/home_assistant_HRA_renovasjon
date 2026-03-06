@@ -4,6 +4,8 @@
 
 
 Home Assistant integration of the norwegian HRA Renovasjon app (HRA App). Special for Ringerike, Lunner,Hole og Jevnaker 
+Denne integrasjonen er laget for HRA Renovasjon (Hallingdal og Ringerike Avfallsselskap). 
+Støtter kommunene Ringerike, Hole, Jevnaker, osv.
 
 Based and Credit to : https://github.com/eyesoft/home_assistant_min_renovasjon/.  Only changed the api / decode part to suit HRA API
 ## Installation
