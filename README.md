@@ -3,7 +3,8 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
 
-Home Assistant integration of the norwegian HRA Renovasjon app (HRA App). Special for Ringerike, Lunner,Hole og Jevnaker 
+Home Assistant integration of the norwegian HRA Renovasjon app (HRA App). Special for Ringerike, Lunner,Hole og Jevnaker
+
 Denne integrasjonen er laget for HRA Renovasjon (Hallingdal og Ringerike Avfallsselskap). 
 Støtter kommunene Ringerike, Hole, Jevnaker, osv.
 
