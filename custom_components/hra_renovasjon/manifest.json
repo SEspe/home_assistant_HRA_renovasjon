@@ -1,7 +1,7 @@
 {
   "domain": "hra_renovasjon",
   "name": "HRA Renovasjon",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "documentation": "https://github.com/SEspe/home_assistant_HRA_renovasjon",
   "issue_tracker": "https://github.com/SEspe/home_assistant_HRA_renovasjon",
   "requirements": [],
