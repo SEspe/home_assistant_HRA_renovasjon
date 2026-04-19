@@ -1,5 +1,5 @@
 {
-    "name": "HRA renovasjon",
+    "name": "HRA Renovasjon",
     "render_readme": true,
     "domains": ["sensor", "calendar"],
     "country": ["NO"],
