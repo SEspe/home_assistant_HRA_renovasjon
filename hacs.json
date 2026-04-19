@@ -2,5 +2,6 @@
     "name": "HRA renovasjon",
     "render_readme": true,
     "domains": ["sensor", "calendar"],
-    "country": ["NO"]
+    "country": ["NO"],
+    "release_tag": true
 }
