@@ -6,6 +6,12 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.1.13] – 2026-07-02
+### Fixed
+- Fjernet ugyldig `release_tag`-nøkkel fra `hacs.json`, siste treff fra `hacs/action`-valideringen; CI er nå grønn
+
+---
+
 ## [0.1.12] – 2026-07-02
 ### Fixed
 - Sortert nøklene i `manifest.json` alfabetisk (etter `domain`/`name`), som `hassfest` krever

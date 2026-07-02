@@ -1,6 +1,5 @@
 {
     "name": "HRA Renovasjon",
     "render_readme": true,
-    "country": ["NO"],
-    "release_tag": true
+    "country": ["NO"]
 }
