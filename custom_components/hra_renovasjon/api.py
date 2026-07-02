@@ -1,5 +1,5 @@
 import aiohttp
-import async_timeout
+import asyncio
 import logging
 
 _LOGGER = logging.getLogger(__name__)
@@ -13,12 +13,12 @@ class HraApiClient:
 
     async def search_address(self, query: str) -> str:
         """Return agreementGuid for an address."""
-        url = f"{BASE_URL}/search/address?query={query}"
+        url = f"{BASE_URL}/search/address"
 
-        _LOGGER.debug("HRA: Searching address: %s", url)
+        _LOGGER.debug("HRA: Searching address: %s (query=%s)", url, query)
 
-        async with async_timeout.timeout(10):
-            async with self._session.get(url) as resp:
+        async with asyncio.timeout(10):
+            async with self._session.get(url, params={"query": query}) as resp:
                 resp.raise_for_status()
                 data = await resp.json()
 
@@ -36,7 +36,7 @@ class HraApiClient:
 
         _LOGGER.debug("HRA: Fetching schedule: %s", url)
 
-        async with async_timeout.timeout(10):
+        async with asyncio.timeout(10):
             async with self._session.get(url) as resp:
                 resp.raise_for_status()
                 data = await resp.json()

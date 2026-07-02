@@ -70,11 +70,11 @@ def hra_device_info():
 # SENSOR: Neste dato på tvers av alle fraksjoner
 # ---------------------------------------------------------------------------
 
-class RenovasjonNesteDatoSensor(SensorEntity):
+class RenovasjonNesteDatoSensor(CoordinatorEntity, SensorEntity):
     """Samlet sensor: neste dato + dager + fraksjoner."""
 
     def __init__(self, coordinator):
-        self.coordinator = coordinator
+        super().__init__(coordinator)
         self._attr_name = "HRA Renovasjon next date"
         self._attr_unique_id = "hra_renovasjon_next_date"
 
@@ -138,9 +138,9 @@ class RenovasjonNesteDatoSensor(SensorEntity):
 # SENSOR: Dager til neste tømming
 # ---------------------------------------------------------------------------
 
-class RenovasjonDagerTilNesteSensor(SensorEntity):
+class RenovasjonDagerTilNesteSensor(CoordinatorEntity, SensorEntity):
     def __init__(self, coordinator):
-        self.coordinator = coordinator
+        super().__init__(coordinator)
         self._attr_name = "HRA Renovasjon days to go"
         self._attr_unique_id = "hra_renovasjon_days_to_go"
 

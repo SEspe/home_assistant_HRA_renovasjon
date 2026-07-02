@@ -16,9 +16,7 @@ Search for repository "HRA_Renovasjon" and download it. Restart Home Assistant.
 
 Go to Settings > Integrations and Add Integration "HRA Renovasjon". Type in address to search, e.g. "Min gate 12, 0153" (street address comma zipcode).
 
-Click Configure and choose fractions to create sensors.
-
-Restart Home Assistant.
+Sensors are created automatically for every fraction found for your address.
 
 Sensors
 
@@ -164,5 +162,5 @@ in configuration.yaml
 logger:
   default: info
   logs:
-    custom_components.hra_renovation: debug
+    custom_components.hra_renovasjon: debug
 ```

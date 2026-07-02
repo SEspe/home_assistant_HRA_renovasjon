@@ -1,6 +1,7 @@
 import logging
 from datetime import datetime, date
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
@@ -10,34 +11,23 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up calendar entity from config entry."""
     entry_data = hass.data[DOMAIN][config_entry.entry_id]
     coordinator = entry_data["coordinator"]
-    client = entry_data["client"]
 
     async_add_entities([
         HraRenovasjonCalendar(
             name="HRA Renovasjon Kalender",
             config_entry=config_entry,
             coordinator=coordinator,
-            client=client,
         )
     ])
 
 
-class HraRenovasjonCalendar(CalendarEntity):
+class HraRenovasjonCalendar(CoordinatorEntity, CalendarEntity):
     """Calendar entity for HRA Renovasjon."""
 
-    def __init__(self, name, config_entry, coordinator, client):
+    def __init__(self, name, config_entry, coordinator):
+        super().__init__(coordinator)
         self._name = name
         self._config_entry = config_entry
-        self._coordinator = coordinator
-        self._client = client
-        self._events: list[CalendarEvent] = []
-
-    @property
-    def should_poll(self) -> bool:
-        return True
-
-    async def async_added_to_hass(self):
-        await self.async_update()
 
     @property
     def name(self):
@@ -59,9 +49,8 @@ class HraRenovasjonCalendar(CalendarEntity):
 
     @property
     def event(self):
-        if not self._events:
-            return None
-        return self._events[0]
+        events = self._events()
+        return events[0] if events else None
 
     async def async_get_events(self, hass, start_date, end_date):
         """Return events between two dates."""
@@ -69,14 +58,13 @@ class HraRenovasjonCalendar(CalendarEntity):
         end = end_date.date() if isinstance(end_date, datetime) else end_date
 
         return [
-            event for event in self._events
+            event for event in self._events()
             if isinstance(event.start, date) and start <= event.start <= end
         ]
 
-    async def async_update(self):
-        """Fetch events from coordinator data."""
-        data = self._coordinator.data
-        _LOGGER.debug("Coordinator data: %s", data)
+    def _events(self) -> list[CalendarEvent]:
+        """Build events from coordinator data."""
+        data = self.coordinator.data or []
 
         events: list[CalendarEvent] = []
 
@@ -93,4 +81,4 @@ class HraRenovasjonCalendar(CalendarEntity):
             ))
 
         events.sort(key=lambda e: e.start)
-        self._events = events
+        return events

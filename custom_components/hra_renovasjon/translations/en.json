@@ -2,37 +2,18 @@
   "config": {
     "step": {
       "user": {
-        "title": "Min Renovasjon address information",
-        "description": "Enter your address information as 'street address, zip code'.",
+        "title": "HRA Renovasjon address information",
+        "description": "Enter your address as 'street address, zip code'.",
         "data": {
-          "street_name": "Street name",
-          "street_code": "Street code",
-          "house_no": "House no",
-          "county_id": "County Id",
-          "date_format": "Date format"
+          "address": "Address"
         }
       }
     },
     "error": {
-      "unknown": "Unknown error occured.",
-      "municipality_not_customer": "Selected municipality is not a customer of Min Renovasjon!",
-      "no_address_found": "No address found.",
-      "multiple_addresses_found": "More than one addresses found. Only one address should be returned. Please narrow your search."
+      "cannot_connect": "Could not find that address, or the HRA service is unavailable. Please check the address and try again."
     },
     "abort": {
-        "single_instance_allowed": "Only a single instance is allowed."
-    }
-  },
-  "options": {
-    "step": {
-      "init": {
-        "title": "Min Renovasjon fractions",
-        "description": "Select fractions from which sensors are to be made. Home Assistant needs to be restartet when done.",
-        "data": {
-          "fraction_ids": "Fractions",
-          "date_format": "Date formatting"
-        }
-      }
+      "already_configured": "This address is already configured."
     }
   }
 }
