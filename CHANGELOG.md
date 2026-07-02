@@ -6,6 +6,12 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.1.11] – 2026-07-02
+### Fixed
+- Fjernet `platforms`-nøkkelen fra `manifest.json` og `domains`-nøkkelen fra `hacs.json` — begge er ugyldige nøkler avdekket av den nye CI-valideringen (`hassfest` og `hacs/action`)
+
+---
+
 ## [0.1.10] – 2026-07-02
 ### Fixed
 - Fjernet `data.py`, en ubrukt og korrupt fil fra en tidligere arkitektur (feil imports, ødelagt indentering)

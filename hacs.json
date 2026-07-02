@@ -1,7 +1,6 @@
 {
     "name": "HRA Renovasjon",
     "render_readme": true,
-    "domains": ["sensor", "calendar"],
     "country": ["NO"],
     "release_tag": true,
     "image": "https://raw.githubusercontent.com/SEspe/home_assistant_HRA_renovasjon/master/custom_components/hra_renovasjon/brand/icon.png"
