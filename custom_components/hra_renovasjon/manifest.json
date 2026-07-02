@@ -1,18 +1,18 @@
 {
   "domain": "hra_renovasjon",
   "name": "HRA Renovasjon",
-  "version": "0.1.11",
-  "documentation": "https://github.com/SEspe/home_assistant_HRA_renovasjon",
-  "issue_tracker": "https://github.com/SEspe/home_assistant_HRA_renovasjon/issues",
-  "requirements": [],
-  "dependencies": [],
   "codeowners": [
     "@SEspe"
   ],
   "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/SEspe/home_assistant_HRA_renovasjon",
   "integration_type": "service",
   "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/SEspe/home_assistant_HRA_renovasjon/issues",
   "loggers": [
     "custom_components.hra_renovasjon"
-  ]
+  ],
+  "requirements": [],
+  "version": "0.1.12"
 }

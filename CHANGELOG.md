@@ -6,6 +6,13 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.1.12] – 2026-07-02
+### Fixed
+- Sortert nøklene i `manifest.json` alfabetisk (etter `domain`/`name`), som `hassfest` krever
+- Fjernet ugyldig `image`-nøkkel fra `hacs.json`, avdekket av `hacs/action`
+
+---
+
 ## [0.1.11] – 2026-07-02
 ### Fixed
 - Fjernet `platforms`-nøkkelen fra `manifest.json` og `domains`-nøkkelen fra `hacs.json` — begge er ugyldige nøkler avdekket av den nye CI-valideringen (`hassfest` og `hacs/action`)
