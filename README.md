@@ -5,7 +5,7 @@
 
 Home Assistant integration of the norwegian HRA Renovasjon app (HRA App). Special for Ringerike, Lunner,Hole og Jevnaker
 
-Denne integrasjonen er laget for HRA Renovasjon (Hallingdal og Ringerike Avfallsselskap). 
+Denne integrasjonen er laget for HRA Renovasjon (Hadeland og Ringerike Avfallsselskap AS).
 Støtter kommunene Ringerike, Hole, Jevnaker, osv.
 
 Based and Credit to : https://github.com/eyesoft/home_assistant_min_renovasjon/.  Only changed the api / decode part to suit HRA API
@@ -16,27 +16,81 @@ Search for repository "HRA_Renovasjon" and download it. Restart Home Assistant.
 
 Go to Settings > Integrations and Add Integration "HRA Renovasjon". Type in address to search, e.g. "Min gate 12, 0153" (street address comma zipcode).
 
-Sensors are created automatically for every fraction found for your address.
+## Entities
 
-Sensors
+Everything for one address is grouped under a single device. Several addresses
+are supported — add the integration once per address, and each gets its own
+device and its own set of entities.
 
-Basic sensors are named:
+The schedule is refreshed from HRA once an hour.
 
-plastemballasje
-papir_papp_og_kartong
-matavfall
-restavfall
-glass_og_metallemballasje
+### Fraction sensors
 
-Sensors has state and attributes
-['next_date', 'next_dates', 'route_name', 'frequency', 'fraction_id', 'fraction_guid', 'days_to_pickup', 'icon', 'friendly_name']
+One sensor per waste fraction HRA reports for your address, created
+automatically. If HRA adds a fraction mid-season, its sensor shows up at the
+next refresh without a restart.
 
-Computed sensors:
-hra_renovasjon_next_date  with attributea days_to_pickup and fractions
+Fractions in the HRA area:
+
+- Restavfall
+- Matavfall
+- Papir, papp og kartong
+- Plastemballasje
+- Glass- og metallemballasje
+
+**State:** the next collection date, as `YYYY-MM-DD`. Only today and later are
+counted; a fraction with nothing scheduled reports `unknown`.
+
+**Attributes:**
+
+| Attribute | Description |
+|---|---|
+| `next_date` | Next collection date — same as the state |
+| `next_dates` | The next collection dates, up to five |
+| `days_to_pickup` | Whole days from today until `next_date` (never negative) |
+| `route_name` | HRA's route for the collection, e.g. `408 Mat og restavfall` |
+| `frequency` | Collection interval in weeks — 4 or 8 in the HRA area |
+| `fraction_id`, `fraction_guid` | HRA's own identifiers for the fraction |
+
+Each sensor also carries an `entity_picture` with the fraction's image, and an
+`mdi` icon as fallback.
+
+### Summary sensors
+
+Two sensors summarise all fractions at once:
+
+| Entity | State | Attributes |
+|---|---|---|
+| `sensor.hra_renovasjon_next_date` | Earliest upcoming collection date across every fraction | `days_to_pickup`, and `fractions` — the fractions collected on that date, comma separated |
+| `sensor.hra_renovasjon_days_to_go` | Whole days until that collection | — |
+
+### Calendar
+
+`calendar.hra_renovasjon_kalender` gets one all-day event per collection,
+titled with the fraction name. It works with the standard Calendar card and
+with calendar triggers in automations.
+
+### A note on entity IDs
+
+The IDs above are what most installations have. Home Assistant derives entity
+IDs from the device and entity name, and that derivation has changed across HA
+versions — a **fresh** install will usually get the device name as a prefix on
+the fraction sensors:
+
+| Installed | Fraction sensor |
+|---|---|
+| Before v0.1.6 | `sensor.restavfall` |
+| v0.1.6 and later | `sensor.hra_renovasjon_restavfall` |
+
+Existing entity IDs are never changed by an upgrade, so an older installation
+keeps the IDs it already has. Check **Developer Tools → States** and filter on
+`hra` to see what yours are called, and use those in the cards below.
 
 
+## Cards
 
-Card
+### Entities card
+
 ![Ex1](docs/ex1.png)
 <details>
     <summary>Show yaml</summary>
@@ -58,7 +112,8 @@ entities:
 ```
 </details>
 
-Card
+### Mushroom template card
+
 ![CEx2](docs/ex2.png)
 
 

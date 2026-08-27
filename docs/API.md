@@ -1,6 +1,6 @@
 # HRA API
 
-Reference for the public HRA (Hallingdal og Ringerike Avfallsselskap) endpoints
+Reference for the public HRA (Hadeland og Ringerike Avfallsselskap AS) endpoints
 this integration depends on.
 
 The API is undocumented and unversioned — HRA can change it without notice.
