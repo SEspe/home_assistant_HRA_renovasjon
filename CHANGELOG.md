@@ -6,6 +6,16 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.1.17] – 2026-08-27
+### Fixed
+- Kort-eksemplene i README brukte de gamle sensornavnene (`sensor.restavfall`). De bruker nå navnene en ny installasjon faktisk får: `sensor.hra_renovasjon_restavfall` og tilsvarende for de andre fraksjonene
+
+### Changed
+- Fraksjonstabellen i README viser nå entitets-ID-en for hver fraksjon, ikke bare fraksjonsnavnet
+- Avsnittet om entitets-ID-er er snudd: eksemplene viser gjeldende navn, og installasjoner fra før 0.1.6 får beskjed om å fjerne `hra_renovasjon_`-prefikset i stedet for motsatt. Samlesensorene og kalenderen er upåvirket
+
+---
+
 ## [0.1.16] – 2026-08-27
 ### Fixed
 - Rettet navnet på selskapet: HRA er **Hadeland og Ringerike Avfallsselskap AS**, ikke Hallingdal. Rettet i README og `docs/API.md`

@@ -30,13 +30,15 @@ One sensor per waste fraction HRA reports for your address, created
 automatically. If HRA adds a fraction mid-season, its sensor shows up at the
 next refresh without a restart.
 
-Fractions in the HRA area:
+Fractions in the HRA area, and the sensors they produce:
 
-- Restavfall
-- Matavfall
-- Papir, papp og kartong
-- Plastemballasje
-- Glass- og metallemballasje
+| Fraction | Sensor |
+|---|---|
+| Restavfall | `sensor.hra_renovasjon_restavfall` |
+| Matavfall | `sensor.hra_renovasjon_matavfall` |
+| Papir, papp og kartong | `sensor.hra_renovasjon_papir_papp_og_kartong` |
+| Plastemballasje | `sensor.hra_renovasjon_plastemballasje` |
+| Glass- og metallemballasje | `sensor.hra_renovasjon_glass_og_metallemballasje` |
 
 **State:** the next collection date, as `YYYY-MM-DD`. Only today and later are
 counted; a fraction with nothing scheduled reports `unknown`.
@@ -72,19 +74,27 @@ with calendar triggers in automations.
 
 ### A note on entity IDs
 
-The IDs above are what most installations have. Home Assistant derives entity
-IDs from the device and entity name, and that derivation has changed across HA
-versions — a **fresh** install will usually get the device name as a prefix on
-the fraction sensors:
+The names used here and in the cards below are the current ones, as a new
+installation gets them.
+
+Home Assistant builds an entity ID from the device name plus the entity name,
+so the fraction sensors come out as `sensor.hra_renovasjon_restavfall`. That
+has been the case since **v0.1.6**, which is when the sensors were first
+attached to a device. Before that they had no device, so they were named from
+the fraction alone:
 
 | Installed | Fraction sensor |
 |---|---|
 | Before v0.1.6 | `sensor.restavfall` |
 | v0.1.6 and later | `sensor.hra_renovasjon_restavfall` |
 
-Existing entity IDs are never changed by an upgrade, so an older installation
-keeps the IDs it already has. Check **Developer Tools → States** and filter on
-`hra` to see what yours are called, and use those in the cards below.
+An upgrade never renames existing entities, so an installation from before
+v0.1.6 keeps the short IDs it already has — **the cards below then need the
+`hra_renovasjon_` prefix removed from the fraction sensors**. The two summary
+sensors and the calendar are unaffected.
+
+Check **Developer Tools → States** and filter on `hra` to see what your
+entities are actually called.
 
 
 ## Cards
@@ -99,15 +109,15 @@ keeps the IDs it already has. Check **Developer Tools → States** and filter on
 type: entities
 title: HRA Renovasjon, neste hentedato
 entities:
-  - entity: sensor.restavfall
+  - entity: sensor.hra_renovasjon_restavfall
     name: Restavfall
-  - entity: sensor.matavfall
+  - entity: sensor.hra_renovasjon_matavfall
     name: Matavfall
-  - entity: sensor.papir_papp_og_kartong
+  - entity: sensor.hra_renovasjon_papir_papp_og_kartong
     name: Papir,papp kartong
-  - entity: sensor.plastemballasje
+  - entity: sensor.hra_renovasjon_plastemballasje
     name: Plast
-  - entity: sensor.glass_og_metallemballasje
+  - entity: sensor.hra_renovasjon_glass_og_metallemballasje
     name: Glass og metall
 ```
 </details>
