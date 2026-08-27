@@ -1,9 +1,13 @@
-Base address
-https://api.hra.no
+# HRA API
 
-Address query to find agreementguid.  Will also show address, 
-https://api.hra.no//search/address?query=Storgata%201,%203510
+These notes have moved to **[docs/API.md](docs/API.md)**, which documents both
+endpoints, their full response fields, the known fractions and the API's
+error behaviour.
 
-agreementguid can be used to retrive details of upcoming disposals
+Quick reference:
 
-https://api.hra.no/Renovation/UpcomingGarbageDisposals/f4cec051-035d-4a86-a657-88285079f20c 
+- Base address: `https://api.hra.no`
+- Address search: `GET /search/address?query=Storgata%201,%203510` — returns `agreementGuid`
+- Upcoming collections: `GET /Renovation/UpcomingGarbageDisposals/{agreementGuid}`
+
+Raw captured responses: [docs/GetExamples.txt](docs/GetExamples.txt)

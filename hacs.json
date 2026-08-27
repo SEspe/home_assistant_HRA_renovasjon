@@ -1,5 +1,6 @@
 {
     "name": "HRA Renovasjon",
+    "homeassistant": "2024.7.0",
     "render_readme": true,
     "country": ["NO"]
 }

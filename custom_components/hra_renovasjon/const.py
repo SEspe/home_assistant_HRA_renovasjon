@@ -5,6 +5,11 @@ CONF_AGREEMENT_GUID = "agreement_guid"
 
 PLATFORMS = ["sensor", "calendar"]
 
+# Bundled fraction icons are mounted here at setup, straight from the
+# component folder (see _async_register_icons), instead of being copied
+# into the user's config/www.
+ICONS_URL_PATH = "/hra_renovasjon/icons"
+
 
 DEFAULT_SCAN_INTERVAL_MINUTES = 60
 

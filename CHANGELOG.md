@@ -6,6 +6,24 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.1.15] – 2026-08-27
+### Changed
+- Ikonene serveres nå direkte fra komponentmappen via en statisk sti (`/hra_renovasjon/icons`) i stedet for å kopieres inn i `config/www` ved hver oppstart. Integrasjonen skriver ikke lenger i brukerens egen `www`-mappe, og overskriver ikke filer som allerede ligger der
+- Fraksjonssensorene bygges nå på nytt ved hver oppdatering fra HRA. Legger HRA til en fraksjon midt i sesongen, dukker sensoren opp av seg selv i stedet for å kreve en omstart av integrasjonen
+
+### Added
+- `docs/API.md`: dokumentasjon av HRA-API-et — begge endepunktene, alle responsfelter, kjente fraksjoner med `fractionId`/`fractionGuid`, og API-ets feilhåndtering (det svarer `200 []` på ugyldige forespørsler i stedet for en feilkode)
+
+### Requirements
+- Krever nå Home Assistant **2024.7** eller nyere (`async_register_static_paths`). Minimumsversjonen er deklarert i `hacs.json`, slik at HACS ikke tilbyr oppdateringen til eldre installasjoner
+- `http` er lagt til som avhengighet i `manifest.json`
+
+### Migrering
+- Oppgraderingen er automatisk. `entity_picture` peker nå på `/hra_renovasjon/icons/...`; ingen konfigurasjon må endres
+- Mappen `config/www/hra_renovasjon` brukes ikke lenger og kan slettes manuelt
+
+---
+
 ## [0.1.14] – 2026-08-27
 ### Fixed
 - Duplikat adresse ga feilmeldingen «cannot_connect» i stedet for `already_configured`. `_abort_if_unique_id_configured()` signaliserer avbrudd ved å kaste `AbortFlow`, som ble slukt av den generelle `except Exception`-blokken i config flow

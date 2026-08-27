@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import logging
 import os
-import shutil
 from datetime import timedelta
 
+from homeassistant.components.http import StaticPathConfig
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import entity_registry as er
@@ -15,11 +15,16 @@ from .api import HraApiClient
 from .const import (
     DOMAIN,
     CONF_AGREEMENT_GUID,
+    ICONS_URL_PATH,
     PLATFORMS,
     DEFAULT_SCAN_INTERVAL_MINUTES,
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+# Set once the icons have been mounted; aiohttp rejects a duplicate route, so
+# the second config entry must not register the same path again.
+DATA_ICONS_REGISTERED = f"{DOMAIN}_icons_registered"
 
 # Up to 0.1.13 the two aggregate sensors used a global unique ID, so a second
 # configured address collided with the first and its sensors were dropped.
@@ -28,6 +33,26 @@ LEGACY_UNIQUE_IDS = {
     "hra_renovasjon_next_date": "next_date",
     "hra_renovasjon_days_to_go": "days_to_go",
 }
+
+
+async def _async_register_icons(hass: HomeAssistant) -> None:
+    """Serve the bundled fraction icons straight from the component folder.
+
+    Up to 0.1.14 these were copied into the user's config/www on every setup,
+    which wrote into the user's own directory and overwrote whatever was
+    already there. Mounting them read-only leaves config/www untouched.
+    """
+    if hass.data.get(DATA_ICONS_REGISTERED):
+        return
+
+    icons_dir = os.path.join(os.path.dirname(__file__), "icons")
+
+    await hass.http.async_register_static_paths(
+        [StaticPathConfig(ICONS_URL_PATH, icons_dir, True)]
+    )
+
+    hass.data[DATA_ICONS_REGISTERED] = True
+    _LOGGER.debug("HRA: icons served from %s", ICONS_URL_PATH)
 
 
 @callback
@@ -59,35 +84,8 @@ def _async_migrate_unique_ids(hass: HomeAssistant, entry: ConfigEntry) -> None:
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up HRA Renovasjon from a config entry."""
 
-    # ----------------------------------------------------------------------
-    # Copy icons from custom_components/hra_renovasjon/icons → /www/hra_renovasjon
-    # without blocking the event loop
-    # ----------------------------------------------------------------------
-    component_dir = os.path.dirname(__file__)
-    src = os.path.join(component_dir, "icons")
-    dst = hass.config.path("www/hra_renovasjon")
+    await _async_register_icons(hass)
 
-    def _copy_icons():
-        try:
-            if not os.path.exists(dst):
-                os.makedirs(dst)
-
-            for filename in os.listdir(src):
-                src_file = os.path.join(src, filename)
-                dst_file = os.path.join(dst, filename)
-                shutil.copy(src_file, dst_file)
-
-            _LOGGER.info("HRA Renovasjon: icons copied to /www/hra_renovasjon")
-
-        except Exception as e:
-            _LOGGER.error("HRA Renovasjon: failed to copy icons: %s", e)
-
-    # Run the blocking copy in a thread
-    await hass.async_add_executor_job(_copy_icons)
-
-    # ----------------------------------------------------------------------
-    # Existing integration logic
-    # ----------------------------------------------------------------------
     session = async_get_clientsession(hass)
     client = HraApiClient(session)
 

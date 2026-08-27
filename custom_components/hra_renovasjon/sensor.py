@@ -5,13 +5,14 @@ from datetime import datetime, date
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util import dt as dt_util
 
 from .const import (
     DOMAIN,
+    ICONS_URL_PATH,
     hra_device_info,
     ATTR_NEXT_DATE,
     ATTR_NEXT_DATES,
@@ -39,19 +40,37 @@ async def async_setup_entry(
 
     _LOGGER.debug("HRA coordinator.data: %s", coordinator.data)
 
-    fraction_names = set(item["name"] for item in coordinator.data)
-
-    entities = []
-
-    # Fraksjonssensorer
-    for fraction_name in sorted(fraction_names):
-        entities.append(HraFractionSensor(coordinator, entry.entry_id, fraction_name))
-
     # Samlesensorer
-    entities.append(RenovasjonDagerTilNesteSensor(coordinator, entry.entry_id))
-    entities.append(RenovasjonNesteDatoSensor(coordinator, entry.entry_id))
+    async_add_entities([
+        RenovasjonDagerTilNesteSensor(coordinator, entry.entry_id),
+        RenovasjonNesteDatoSensor(coordinator, entry.entry_id),
+    ])
 
-    async_add_entities(entities)
+    # Fraksjonssensorer. HRA kan legge til en fraksjon midt i en sesong, så
+    # utvalget leses på nytt ved hver oppdatering i stedet for kun ved oppstart.
+    known_fractions: set[str] = set()
+
+    @callback
+    def _async_add_new_fractions() -> None:
+        data = coordinator.data
+        if not isinstance(data, list):
+            return
+
+        names = {item["name"] for item in data if item.get("name")}
+        new_names = names - known_fractions
+        if not new_names:
+            return
+
+        known_fractions.update(new_names)
+        _LOGGER.debug("HRA: adding fraction sensors: %s", sorted(new_names))
+
+        async_add_entities(
+            HraFractionSensor(coordinator, entry.entry_id, name)
+            for name in sorted(new_names)
+        )
+
+    _async_add_new_fractions()
+    entry.async_on_unload(coordinator.async_add_listener(_async_add_new_fractions))
 
 
 # ---------------------------------------------------------------------------
@@ -231,19 +250,19 @@ class HraFractionSensor(CoordinatorEntity, SensorEntity):
         name = self._fraction_name.lower()
 
         if "glass" in name and "metall" in name:
-            return "/local/hra_renovasjon/GlassOgMetall.png"
+            return f"{ICONS_URL_PATH}/GlassOgMetall.png"
         if "glass" in name:
-            return "/local/hra_renovasjon/glass-new.png"
+            return f"{ICONS_URL_PATH}/glass-new.png"
         if "metall" in name or "metal" in name:
-            return "/local/hra_renovasjon/metal-new.png"
+            return f"{ICONS_URL_PATH}/metal-new.png"
         if "rest" in name:
-            return "/local/hra_renovasjon/waste-new.png"
+            return f"{ICONS_URL_PATH}/waste-new.png"
         if "mat" in name:
-            return "/local/hra_renovasjon/organic-new.png"
+            return f"{ICONS_URL_PATH}/organic-new.png"
         if "papir" in name or "kartong" in name:
-            return "/local/hra_renovasjon/PapirOgKartong.png"
+            return f"{ICONS_URL_PATH}/PapirOgKartong.png"
         if "plast" in name:
-            return "/local/hra_renovasjon/plastic-new.png"
+            return f"{ICONS_URL_PATH}/plastic-new.png"
 
         return None
 

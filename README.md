@@ -164,3 +164,10 @@ logger:
   logs:
     custom_components.hra_renovasjon: debug
 ```
+
+## API
+
+The HRA API this integration talks to is documented in
+[docs/API.md](docs/API.md): both endpoints, their response fields, the known
+waste fractions, and the API's error behaviour (it answers `200 []` for bad
+input rather than an error status).
