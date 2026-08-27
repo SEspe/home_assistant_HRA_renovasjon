@@ -6,6 +6,18 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.1.16] – 2026-08-27
+### Fixed
+- Rettet navnet på selskapet: HRA er **Hadeland og Ringerike Avfallsselskap AS**, ikke Hallingdal. Rettet i README og `docs/API.md`
+
+### Changed
+- README-en beskriver nå entitetene som faktisk opprettes. Den gamle teksten var fra før kalenderentiteten, `days to go`-sensoren og støtten for flere adresser, og listet attributtene som en rå Python-liste
+- Ny «Entities»-seksjon: fraksjonssensorene med alle attributter og hva de betyr, de to samlesensorene, kalenderentiteten, og at fraksjoner HRA legger til midt i sesongen dukker opp av seg selv
+- Eget avsnitt om entitets-ID-er. Installasjoner fra før 0.1.6 har `sensor.restavfall`, mens en ny installasjon får `sensor.hra_renovasjon_restavfall` — begge er dokumentert, med henvisning til Utviklerverktøy → Tilstander for å se hva ens egen installasjon bruker
+- Kort-eksemplene har fått egne overskrifter
+
+---
+
 ## [0.1.15] – 2026-08-27
 ### Changed
 - Ikonene serveres nå direkte fra komponentmappen via en statisk sti (`/hra_renovasjon/icons`) i stedet for å kopieres inn i `config/www` ved hver oppstart. Integrasjonen skriver ikke lenger i brukerens egen `www`-mappe, og overskriver ikke filer som allerede ligger der
