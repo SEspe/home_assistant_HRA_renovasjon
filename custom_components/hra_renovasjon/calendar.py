@@ -2,7 +2,7 @@ import logging
 from datetime import datetime, date
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from .const import DOMAIN
+from .const import DOMAIN, hra_device_info
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -39,13 +39,8 @@ class HraRenovasjonCalendar(CoordinatorEntity, CalendarEntity):
 
     @property
     def device_info(self):
-        """Register device so HA can show logo.png."""
-        return {
-            "identifiers": {(DOMAIN, self._config_entry.entry_id)},
-            "name": "HRA Renovasjon",
-            "manufacturer": "HRA",
-            "model": "Renovasjonskalender",
-        }
+        """Share one device with the sensors of the same config entry."""
+        return hra_device_info(self._config_entry.entry_id)
 
     @property
     def event(self):

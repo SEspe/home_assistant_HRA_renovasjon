@@ -15,3 +15,17 @@ ATTR_FREQUENCY = "frequency"
 ATTR_FRACTION_ID = "fraction_id"
 ATTR_FRACTION_GUID = "fraction_guid"
 ATTR_DAYSNEXT = "days_to_pickup"
+
+
+def hra_device_info(entry_id: str) -> dict:
+    """Device info shared by every entity belonging to one config entry.
+
+    Keyed on the entry id so that each configured address gets its own
+    device instead of everything collapsing into one shared device.
+    """
+    return {
+        "identifiers": {(DOMAIN, entry_id)},
+        "name": "HRA Renovasjon",
+        "manufacturer": "HRA",
+        "model": "Renovasjon API",
+    }

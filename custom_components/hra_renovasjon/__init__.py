@@ -6,7 +6,8 @@ import shutil
 from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -19,6 +20,40 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+# Up to 0.1.13 the two aggregate sensors used a global unique ID, so a second
+# configured address collided with the first and its sensors were dropped.
+# They are entry-scoped from 0.1.14; map the old IDs to the new suffixes.
+LEGACY_UNIQUE_IDS = {
+    "hra_renovasjon_next_date": "next_date",
+    "hra_renovasjon_days_to_go": "days_to_go",
+}
+
+
+@callback
+def _async_migrate_unique_ids(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Re-key pre-0.1.14 aggregate sensors so entity IDs and history survive."""
+    registry = er.async_get(hass)
+
+    for legacy_unique_id, suffix in LEGACY_UNIQUE_IDS.items():
+        entity_id = registry.async_get_entity_id("sensor", DOMAIN, legacy_unique_id)
+        if entity_id is None:
+            continue
+
+        registry_entry = registry.async_get(entity_id)
+        if registry_entry is None or registry_entry.config_entry_id != entry.entry_id:
+            # Owned by another config entry, which migrates it on its own setup.
+            continue
+
+        new_unique_id = f"{entry.entry_id}_{suffix}"
+        if registry.async_get_entity_id("sensor", DOMAIN, new_unique_id) is not None:
+            _LOGGER.debug("HRA: %s already migrated, skipping", legacy_unique_id)
+            continue
+
+        _LOGGER.debug(
+            "HRA: migrating unique_id %s -> %s", legacy_unique_id, new_unique_id
+        )
+        registry.async_update_entity(entity_id, new_unique_id=new_unique_id)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -80,6 +115,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "client": client,
     }
 
+    _async_migrate_unique_ids(hass, entry)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 

@@ -7,7 +7,7 @@ import voluptuous as vol
 
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
-from homeassistant.data_entry_flow import FlowResult
+from homeassistant.data_entry_flow import AbortFlow, FlowResult
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DOMAIN, CONF_ADDRESS, CONF_AGREEMENT_GUID
@@ -45,6 +45,11 @@ class HraConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     title=address,
                     data=data,
                 )
+
+            except AbortFlow:
+                # _abort_if_unique_id_configured() signals an abort by raising;
+                # it must not be swallowed by the generic handler below.
+                raise
 
             except Exception as err:
                 _LOGGER.exception("Error validating address with HRA: %s", err)

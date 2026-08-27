@@ -12,6 +12,7 @@ from homeassistant.util import dt as dt_util
 
 from .const import (
     DOMAIN,
+    hra_device_info,
     ATTR_NEXT_DATE,
     ATTR_NEXT_DATES,
     ATTR_ROUTE_NAME,
@@ -47,23 +48,10 @@ async def async_setup_entry(
         entities.append(HraFractionSensor(coordinator, entry.entry_id, fraction_name))
 
     # Samlesensorer
-    entities.append(RenovasjonDagerTilNesteSensor(coordinator))
-    entities.append(RenovasjonNesteDatoSensor(coordinator))
+    entities.append(RenovasjonDagerTilNesteSensor(coordinator, entry.entry_id))
+    entities.append(RenovasjonNesteDatoSensor(coordinator, entry.entry_id))
 
     async_add_entities(entities)
-
-
-# ---------------------------------------------------------------------------
-# FELLES DEVICE_INFO
-# ---------------------------------------------------------------------------
-
-def hra_device_info():
-    return {
-        "identifiers": {(DOMAIN, "hra_renovasjon_device")},
-        "name": "HRA Renovasjon",
-        "manufacturer": "HRA",
-        "model": "Renovasjon API",
-    }
 
 
 # ---------------------------------------------------------------------------
@@ -73,14 +61,15 @@ def hra_device_info():
 class RenovasjonNesteDatoSensor(CoordinatorEntity, SensorEntity):
     """Samlet sensor: neste dato + dager + fraksjoner."""
 
-    def __init__(self, coordinator):
+    def __init__(self, coordinator, entry_id: str):
         super().__init__(coordinator)
+        self._entry_id = entry_id
         self._attr_name = "HRA Renovasjon next date"
-        self._attr_unique_id = "hra_renovasjon_next_date"
+        self._attr_unique_id = f"{entry_id}_next_date"
 
     @property
     def device_info(self):
-        return hra_device_info()
+        return hra_device_info(self._entry_id)
 
     @property
     def native_value(self):
@@ -139,14 +128,15 @@ class RenovasjonNesteDatoSensor(CoordinatorEntity, SensorEntity):
 # ---------------------------------------------------------------------------
 
 class RenovasjonDagerTilNesteSensor(CoordinatorEntity, SensorEntity):
-    def __init__(self, coordinator):
+    def __init__(self, coordinator, entry_id: str):
         super().__init__(coordinator)
+        self._entry_id = entry_id
         self._attr_name = "HRA Renovasjon days to go"
-        self._attr_unique_id = "hra_renovasjon_days_to_go"
+        self._attr_unique_id = f"{entry_id}_days_to_go"
 
     @property
     def device_info(self):
-        return hra_device_info()
+        return hra_device_info(self._entry_id)
 
     @property
     def native_value(self):
@@ -192,7 +182,7 @@ class HraFractionSensor(CoordinatorEntity, SensorEntity):
 
     @property
     def device_info(self):
-        return hra_device_info()
+        return hra_device_info(self._entry_id)
 
     @property
     def native_value(self):

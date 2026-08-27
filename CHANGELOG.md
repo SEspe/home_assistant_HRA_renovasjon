@@ -6,6 +6,21 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.1.14] – 2026-08-27
+### Fixed
+- Duplikat adresse ga feilmeldingen «cannot_connect» i stedet for `already_configured`. `_abort_if_unique_id_configured()` signaliserer avbrudd ved å kaste `AbortFlow`, som ble slukt av den generelle `except Exception`-blokken i config flow
+- Samlesensorene (`next date` og `days to go`) brukte globale unike ID-er. Ved en andre konfigurert adresse kolliderte de, og Home Assistant droppet sensorene til adresse nummer to («Platform hra_renovasjon does not generate unique IDs»). ID-ene er nå knyttet til config entry
+- Alle entiteter fra samme config entry havner nå på én device. Kalenderen registrerte seg under `(DOMAIN, entry_id)` mens sensorene brukte en fast `(DOMAIN, "hra_renovasjon_device")`, noe som ga to separate devices per adresse — og én delt device på tvers av adresser
+
+### Changed
+- Felles `hra_device_info(entry_id)` i `const.py` erstatter device_info-funksjonen i `sensor.py` og den inline-definerte i `calendar.py`
+
+### Migrering
+- Eksisterende `sensor.hra_renovasjon_next_date` og `sensor.hra_renovasjon_days_to_go` får nye unike ID-er automatisk ved oppstart. Entitets-ID-er, historikk og automasjoner beholdes, og ingen manuelle steg er nødvendig
+- Sensorene flyttes til en ny device. Den gamle, nå tomme «HRA Renovasjon»-devicen kan slettes manuelt hvis den blir liggende igjen
+
+---
+
 ## [0.1.13] – 2026-07-02
 ### Fixed
 - Fjernet ugyldig `release_tag`-nøkkel fra `hacs.json`, siste treff fra `hacs/action`-valideringen; CI er nå grønn
