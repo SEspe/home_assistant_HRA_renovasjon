@@ -6,6 +6,16 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [Unreleased]
+### Fixed
+- Med to adresser ble ikon-mappen montert to ganger. Oppføringene settes opp samtidig, og vakten som skulle hindre dette ble først satt etter at registreringen var ferdig, så begge slapp gjennom
+- Et element uten `name` fra API-et fikk sensoren for neste dato og kalenderen til å feile. Slike elementer hoppes nå over, slik fraksjonssensorene allerede gjorde
+
+### Added
+- Testsuite mot en ekte Home Assistant-instans (`pytest-homeassistant-custom-component`), kjørt i CI på Python 3.12, 3.13 og 3.14, og mot minsteversjonen 2024.7.0 fra `hacs.json`
+
+---
+
 ## [0.1.17] – 2026-08-27
 ### Fixed
 - Kort-eksemplene i README brukte de gamle sensornavnene (`sensor.restavfall`). De bruker nå navnene en ny installasjon faktisk får: `sensor.hra_renovasjon_restavfall` og tilsvarende for de andre fraksjonene
