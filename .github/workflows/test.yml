@@ -1,0 +1,51 @@
+name: Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pytest:
+    name: pytest (py${{ matrix.python-version }}${{ matrix.ha != 'newest' && format(', HA {0}', matrix.ha) || '' }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # pytest-homeassistant-custom-component is unpinned, so each Python
+        # version gets the newest Home Assistant that supports it: 3.12 ->
+        # 2025.1, 3.13 -> 2026.2, 3.14 -> current. Without 3.14, CI would
+        # never run against a current HA.
+        python-version: ["3.12", "3.13", "3.14"]
+        ha: [newest]
+        include:
+          # The minimum declared in hacs.json, tested for real rather than
+          # assumed. Keep this in step with hacs.json "homeassistant".
+          - python-version: "3.12"
+            ha: "2024.7.0"
+            harness: "pytest-homeassistant-custom-component==0.13.144"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements_test.txt
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements_test.txt
+
+      - name: Pin Home Assistant to ${{ matrix.ha }}
+        if: matrix.harness
+        # josepy<2: HA 2024.7's hass-nabucasa -> acme uses
+        # josepy.ComparableX509, which josepy 2.x removed. Nothing pins it,
+        # so a fresh install today cannot even import HA without this.
+        run: pip install "${{ matrix.harness }}" "josepy<2"
+
+      - name: Run tests
+        run: pytest --cov=custom_components/hra_renovasjon --cov-report=term-missing

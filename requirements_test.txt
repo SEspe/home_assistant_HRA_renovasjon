@@ -1,0 +1,6 @@
+# Test dependencies for the HRA Renovasjon Home Assistant integration.
+# Home Assistant itself is pulled in transitively by
+# pytest-homeassistant-custom-component, which pins a matching HA version.
+# The integration has no runtime requirements of its own (manifest.json).
+pytest-homeassistant-custom-component
+pytest-cov
