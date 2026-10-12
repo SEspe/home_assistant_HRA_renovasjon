@@ -133,7 +133,7 @@ class RenovasjonNesteDatoSensor(CoordinatorEntity, SensorEntity):
         fraksjoner = [
             entry.get("name")
             for entry in data
-            if entry.get("date") == next_date_str
+            if entry.get("date") == next_date_str and entry.get("name")
         ]
 
         return {
@@ -278,7 +278,10 @@ class HraFractionSensor(CoordinatorEntity, SensorEntity):
         data = self.coordinator.data or []
         today = dt_util.now().date()
 
-        entries = [item for item in data if item["name"] == self._fraction_name]
+        entries = [
+            item for item in data
+            if item.get("name") == self._fraction_name and item.get("date")
+        ]
 
         def parse_date(dstr: str) -> date | None:
             try:

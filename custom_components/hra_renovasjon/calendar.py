@@ -64,10 +64,16 @@ class HraRenovasjonCalendar(CoordinatorEntity, CalendarEntity):
         events: list[CalendarEvent] = []
 
         for entry in data:
-            fraction_name = entry["name"]
-            pickup_date = entry["date"]
+            fraction_name = entry.get("name")
+            pickup_date = entry.get("date")
 
-            d = datetime.strptime(pickup_date, "%Y-%m-%d").date()
+            # Skip what the sensors skip, rather than failing the whole calendar.
+            if not fraction_name or not pickup_date:
+                continue
+            try:
+                d = datetime.strptime(pickup_date, "%Y-%m-%d").date()
+            except ValueError:
+                continue
 
             events.append(CalendarEvent(
                 summary=fraction_name,
