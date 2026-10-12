@@ -6,7 +6,7 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
-## [Unreleased]
+## [0.1.18] – 2026-10-12
 ### Fixed
 - Med to adresser ble ikon-mappen montert to ganger. Oppføringene settes opp samtidig, og vakten som skulle hindre dette ble først satt etter at registreringen var ferdig, så begge slapp gjennom
 - Et element uten `name` fra API-et fikk sensoren for neste dato og kalenderen til å feile. Slike elementer hoppes nå over, slik fraksjonssensorene allerede gjorde
