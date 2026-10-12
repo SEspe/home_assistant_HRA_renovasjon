@@ -45,13 +45,22 @@ async def _async_register_icons(hass: HomeAssistant) -> None:
     if hass.data.get(DATA_ICONS_REGISTERED):
         return
 
+    # Claim the flag before awaiting: config entries are set up concurrently,
+    # so a second entry would otherwise pass the check above while the first
+    # is still registering, and mount the route a second time.
+    hass.data[DATA_ICONS_REGISTERED] = True
+
     icons_dir = os.path.join(os.path.dirname(__file__), "icons")
 
-    await hass.http.async_register_static_paths(
-        [StaticPathConfig(ICONS_URL_PATH, icons_dir, True)]
-    )
+    try:
+        await hass.http.async_register_static_paths(
+            [StaticPathConfig(ICONS_URL_PATH, icons_dir, True)]
+        )
+    except Exception:
+        # Let the retried setup register the route again.
+        hass.data.pop(DATA_ICONS_REGISTERED, None)
+        raise
 
-    hass.data[DATA_ICONS_REGISTERED] = True
     _LOGGER.debug("HRA: icons served from %s", ICONS_URL_PATH)
 
 
