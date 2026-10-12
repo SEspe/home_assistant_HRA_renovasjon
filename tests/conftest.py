@@ -1,6 +1,5 @@
 """Shared fixtures for the HRA Renovasjon test suite."""
 
-import sys
 from datetime import timedelta
 
 import aiohttp.connector
@@ -25,12 +24,15 @@ from custom_components.hra_renovasjon.const import (
 # socket block by turning disable_socket into a no-op before any test runs.
 pytest_socket.disable_socket = lambda *args, **kwargs: None
 
-# Windows only, for local runs: aiohttp picks aiodns as its resolver when it is
-# installed (HA installs it), and aiodns refuses to run on the Proactor loop.
-# Every request is mocked, so nothing resolves anyway; the threaded resolver
-# just lets the mocked ClientSession be constructed. CI runs on Linux.
-if sys.platform == "win32":
-    aiohttp.connector.DefaultResolver = aiohttp.resolver.ThreadedResolver
+# Use aiohttp's threaded resolver instead of aiodns, which HA installs and
+# aiohttp then picks by default. Every request goes through aioclient_mock, so
+# nothing is ever resolved; the resolver only has to let the mocked
+# ClientSession be built and closed cleanly. aiodns does neither here:
+# - on Windows it refuses to run on the Proactor event loop at all;
+# - on Linux, closing it leaves pycares' `_run_safe_shutdown_loop` thread
+#   behind, which the HA plugin's cleanup check (HA 2025.1 harness) reports
+#   as a lingering thread and errors the test.
+aiohttp.connector.DefaultResolver = aiohttp.resolver.ThreadedResolver
 
 pytest_plugins = ["pytest_homeassistant_custom_component"]
 
