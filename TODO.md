@@ -7,4 +7,3 @@ Enhancements suggested after comparing with [monsivar/HRA_Hentedager](https://gi
 - [ ] **Lovelace card:** a card that groups fractions sharing the same pickup date and registers itself automatically.
 - [ ] **Two devices:** split the fraction/date sensors and the day/calendar entities into two logical devices, as the other repo does.
 - [ ] **Translation:** add `translations/nn.json`.
-- [ ] **Scan interval:** verify the interval set in the config flow is actually applied to the coordinator (`__init__.py` currently uses `DEFAULT_SCAN_INTERVAL_MINUTES`).
