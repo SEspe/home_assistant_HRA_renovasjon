@@ -11,8 +11,12 @@ class HraApiClient:
     def __init__(self, session: aiohttp.ClientSession):
         self._session = session
 
-    async def search_address(self, query: str) -> str:
-        """Return agreementGuid for an address."""
+    async def search_addresses(self, query: str) -> list[dict]:
+        """Return all address matches as dicts with agreementGuid and name.
+
+        Items without an agreementGuid are skipped, and matches sharing an
+        agreementGuid are returned once. Raises ValueError if nothing matches.
+        """
         url = f"{BASE_URL}/search/address"
 
         _LOGGER.debug("HRA: Searching address: %s (query=%s)", url, query)
@@ -22,13 +26,25 @@ class HraApiClient:
                 resp.raise_for_status()
                 data = await resp.json()
 
-                if not data:
-                    raise ValueError("HRA: No address results returned")
+        matches: list[dict] = []
+        seen: set[str] = set()
+        for item in data or []:
+            guid = item.get("agreementGuid")
+            if not guid or guid in seen:
+                continue
+            seen.add(guid)
+            matches.append(
+                {
+                    "agreementGuid": guid,
+                    "name": item.get("name") or item.get("propertyName") or guid,
+                }
+            )
 
-                agreement_guid = data[0]["agreementGuid"]
-                _LOGGER.debug("HRA: Found agreementGuid: %s", agreement_guid)
+        if not matches:
+            raise ValueError("HRA: No address results returned")
 
-                return agreement_guid
+        _LOGGER.debug("HRA: Found %d address match(es)", len(matches))
+        return matches
 
     async def get_upcoming_disposals(self, agreement_guid: str) -> list:
         """Return list of upcoming garbage disposals."""

@@ -6,6 +6,12 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [Unreleased]
+### Changed
+- Når HRA finner flere eiendommer for en adresse, får du nå velge riktig adresse i oppsettet i stedet for at den første treffet brukes automatisk
+
+---
+
 ## [0.1.18] – 2026-10-12
 ### Fixed
 - Med to adresser ble ikon-mappen montert to ganger. Oppføringene settes opp samtidig, og vakten som skulle hindre dette ble først satt etter at registreringen var ferdig, så begge slapp gjennom

@@ -46,21 +46,45 @@ async def test_user_flow_creates_entry(hass, aioclient_mock):
     assert url.query["query"] == ADDRESS
 
 
-async def test_vague_address_takes_first_match(hass, aioclient_mock):
-    """Documented behaviour: several matches silently pick data[0]."""
+async def test_several_matches_shows_picker(hass, aioclient_mock):
     aioclient_mock.get(
         SEARCH_URL,
-        json=[{"agreementGuid": AGREEMENT_GUID}, {"agreementGuid": "other-guid"}],
+        json=[
+            {"agreementGuid": AGREEMENT_GUID, "name": "Storgata 1, 3510 HØNEFOSS"},
+            {"agreementGuid": "other-guid", "name": "Storgata 2, 3510 HØNEFOSS"},
+        ],
     )
     result = await _start(hass)
 
+    result2 = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {CONF_ADDRESS: "Storgata"}
+    )
+
+    assert result2["type"] == FlowResultType.FORM
+    assert result2["step_id"] == "select"
+
+
+async def test_picked_match_creates_entry(hass, aioclient_mock):
+    aioclient_mock.get(
+        SEARCH_URL,
+        json=[
+            {"agreementGuid": AGREEMENT_GUID, "name": "Storgata 1, 3510 HØNEFOSS"},
+            {"agreementGuid": "other-guid", "name": "Storgata 2, 3510 HØNEFOSS"},
+        ],
+    )
+    result = await _start(hass)
+    result2 = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {CONF_ADDRESS: "Storgata"}
+    )
+
     with patch("custom_components.hra_renovasjon.async_setup_entry", return_value=True):
-        result2 = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {CONF_ADDRESS: "Storgata"}
+        result3 = await hass.config_entries.flow.async_configure(
+            result2["flow_id"], {"property": "other-guid"}
         )
 
-    assert result2["type"] == FlowResultType.CREATE_ENTRY
-    assert result2["data"][CONF_AGREEMENT_GUID] == AGREEMENT_GUID
+    assert result3["type"] == FlowResultType.CREATE_ENTRY
+    assert result3["title"] == "Storgata 2, 3510 HØNEFOSS"
+    assert result3["data"][CONF_AGREEMENT_GUID] == "other-guid"
 
 
 async def test_already_configured_aborts(hass, aioclient_mock):

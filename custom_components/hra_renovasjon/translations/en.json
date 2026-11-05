@@ -7,6 +7,13 @@
         "data": {
           "address": "Address"
         }
+      },
+      "select": {
+        "title": "Select property",
+        "description": "Several properties match '{query}'. Select the correct address.",
+        "data": {
+          "property": "Address"
+        }
       }
     },
     "error": {
