@@ -10,7 +10,7 @@
       },
       "select": {
         "title": "Velg eiendom",
-        "description": "Flere eiendommer passer til '{query}'. Velg riktig adresse.",
+        "description": "Flere eiendommer passer til {query}. Velg riktig adresse.",
         "data": {
           "property": "Adresse"
         }
