@@ -6,7 +6,7 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
-## [Unreleased]
+## [0.1.19-beta.1] – 2026-11-05
 ### Changed
 - Når HRA finner flere eiendommer for en adresse, får du nå velge riktig adresse i oppsettet i stedet for at den første treffet brukes automatisk
 
