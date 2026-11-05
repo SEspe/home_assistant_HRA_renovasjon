@@ -82,9 +82,10 @@ curl -G --data-urlencode "query=Veienkollen 24, 3517" \
 ### Behaviour to be aware of
 
 - **A vague query returns many matches.** `query=Veienkollen` (street name only)
-  returned 23 results. The integration takes `data[0]`, so an under-specified
-  address silently resolves to whichever property the API happens to rank
-  first — this is why the config flow asks for `street address, postal code`.
+  returned 23 results. The integration lists all distinct matches
+  (by `agreementGuid`) and asks the user to pick one, instead of silently
+  taking the first. The config flow still asks for `street address, postal code`
+  to keep the list short.
 - **The postal code is optional in practice.** `Veienkollen 24` alone resolved
   to the same property as `Veienkollen 24, 3517`, but including it is what
   makes the match unambiguous.
