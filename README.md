@@ -8,7 +8,18 @@ Home Assistant integration of the norwegian HRA Renovasjon app (HRA App). Specia
 Denne integrasjonen er laget for HRA Renovasjon (Hadeland og Ringerike Avfallsselskap AS).
 Støtter kommunene Ringerike, Hole, Jevnaker, osv.
 
-Based and Credit to : https://github.com/eyesoft/home_assistant_min_renovasjon/.  Only changed the api / decode part to suit HRA API
+## Bakgrunn og kreditering
+
+Integrasjonen bygger på [eyesoft/home_assistant_min_renovasjon](https://github.com/eyesoft/home_assistant_min_renovasjon/),
+som er lisensiert under MIT. Opprinnelig kode er brukt med takk. Den opprinnelige
+lisensen ligger i `LICENSE`.
+
+Det som er endret, er beskrevet under [Endringer fra originalen](#endringer-fra-originalen).
+
+## Krav
+
+- Home Assistant **2026.1.0** eller nyere (`hacs.json`)
+
 ## Installation
 Under HACS -> Integrations, add custom repository "https://github.com/SEspe/home_assistant_HRA_renovasjon/ with Category "Integration". 
 
@@ -219,6 +230,33 @@ color: >
 
 ```
 </details>
+
+## Endringer fra originalen
+
+Originalen dekker Min Renovasjon. Denne versjonen er skrevet om for HRA sitt
+API og for å støtte flere adresser og flere fraksjoner. De viktigste endringene:
+
+- **Ny API-klient** (`api.py`) mot `api.hra.no`, med `asyncio.timeout(10)` og
+  `raise_for_status()` på alle kall. Adressesøk URL-kodes riktig, også for adresser
+  med mellomrom, komma og æøå.
+- **Adressevalg:** gir HRA flere treff for samme adresse, får du velge riktig eiendom
+  i oppsettet, i stedet for at det første treffet brukes automatisk.
+- **En device per adresse:** alle sensorer og kalenderen for én adresse ligger under
+  samme device. Flere adresser støttes ved å legge til integrasjonen flere ganger.
+- **Fraksjonssensorer bygges på nytt** ved hver oppdatering. Legger HRA til en
+  fraksjon midt i sesongen, dukker sensoren opp uten omstart.
+- **Oppdateringer én gang i timen** fra HRA.
+- **Hoppes over ved feil:** et element fra API-et uten navn hopper over, i stedet
+  for å stoppe integrasjonen.
+- **Ikoner serveres fra integrasjonsmappen** (`/hra_renovasjon/icons`). Ingen filer
+  kopieres til `config/www`.
+- **Samlesensorer** (`next_date`, `days_to_go`) og **kalender** er bygget på samme
+  data som fraksjonssensorene.
+- **Tester:** testsuite mot en ekte Home Assistant-instans, kjørt i GitHub Actions på
+  Python 3.12, 3.13 og 3.14, og en egen jobb mot minsteversjonen i `hacs.json`.
+- **Oversettelser** på norsk (`nb.json`) og engelsk (`en.json`).
+
+Endringene er loggført i [CHANGELOG.md](CHANGELOG.md).
 
 ## Debugging
 in configuration.yaml
