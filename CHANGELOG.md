@@ -6,6 +6,12 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.1.20] – 2026-11-06
+### Changed
+- Ny utgivelse med samme funksjonalitet som 0.1.19. Utgivelsen lages nå etter at valideringen (HACS og hassfest) er grønn, slik HACS krever for å ta med integrasjonen i standardlisten
+
+---
+
 ## [0.1.19] – 2026-11-06
 ### Changed
 - Når HRA finner flere eiendommer for en adresse, får du nå velge riktig adresse i oppsettet i stedet for at den første treffet brukes automatisk
