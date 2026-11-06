@@ -43,10 +43,9 @@ jobs:
 
       - name: Pin Home Assistant to ${{ matrix.ha }}
         if: matrix.harness
-        # josepy<2: HA 2024.7's hass-nabucasa -> acme uses
-        # josepy.ComparableX509, which josepy 2.x removed. Nothing pins it,
-        # so a fresh install today cannot even import HA without this.
-        run: pip install "${{ matrix.harness }}" "josepy<2"
+        # Only the minimum-version job uses a pinned harness. The josepy<2 pin
+        # that HA 2024.7 needed conflicts with HA 2026.1, so it is no longer set.
+        run: pip install "${{ matrix.harness }}"
 
       - name: Run tests
         run: pytest --cov=custom_components/hra_renovasjon --cov-report=term-missing
