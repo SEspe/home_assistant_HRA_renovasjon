@@ -6,9 +6,11 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
-## [0.1.19-beta.1] – 2026-11-05
+## [0.1.19] – 2026-11-06
 ### Changed
 - Når HRA finner flere eiendommer for en adresse, får du nå velge riktig adresse i oppsettet i stedet for at den første treffet brukes automatisk
+- Minste støttede Home Assistant-versjon er nå 2026.1.0 (var 2024.7.0). Eldre versjoner vises ikke lenger i HACS
+- Testmatrisen kjører minsteversjonen på Python 3.13 mot Home Assistant 2026.1.0
 
 ---
 
