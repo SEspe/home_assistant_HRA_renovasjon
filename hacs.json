@@ -1,5 +1,5 @@
 {
-    "name": "HRA Renovasjon",
+    "name": "HRA Renovasjon (Ringerike, Hole, Hadeland)",
     "homeassistant": "2026.1.0",
     "render_readme": true,
     "country": ["NO"]

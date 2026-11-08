@@ -6,6 +6,12 @@ og versjonering følger [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.1.21] – 2026-11-08
+### Changed
+- Visningsnavnet er nå «HRA Renovasjon (Ringerike, Hole, Hadeland)» i Home Assistant og HACS, for å skille integrasjonen fra andre HRA-integrasjoner. Domenet (`hra_renovasjon`), enhetsnavnet og entitets-ID-ene er uendret, så ingen automasjoner eller kort må endres
+
+---
+
 ## [0.1.20] – 2026-11-06
 ### Changed
 - Ny utgivelse med samme funksjonalitet som 0.1.19. Utgivelsen lages nå etter at valideringen (HACS og hassfest) er grønn, slik HACS krever for å ta med integrasjonen i standardlisten

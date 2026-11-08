@@ -1,6 +1,6 @@
 {
   "domain": "hra_renovasjon",
-  "name": "HRA Renovasjon",
+  "name": "HRA Renovasjon (Ringerike, Hole, Hadeland)",
   "codeowners": [
     "@SEspe"
   ],
@@ -16,5 +16,5 @@
     "custom_components.hra_renovasjon"
   ],
   "requirements": [],
-  "version": "0.1.20"
+  "version": "0.1.21"
 }
